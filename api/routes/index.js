@@ -1,8 +1,8 @@
-const express = require("express");
-const multi = require("./multi")
+const express = require( "express" ),
+      multi = require( "./multi" )
 
-const routes = express.Router();
+const router = express.Router()
 
-routes.use("/multi", multi);
+router.use( "/multi", multi )
 
-module.exports = routes
+module.exports = router

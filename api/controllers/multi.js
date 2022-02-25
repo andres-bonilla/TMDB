@@ -1,23 +1,23 @@
-const multi = require("../config/multi")
-
+const multi = require( "../config/multi" )
 
 exports.search = ( req, res ) => {
 
    multi.search( req.query.words )
    .then( ( { err, data } ) => {
       err 
-      ? res.status( data.status || 500 ).send( { message: data.message } )
-      : res.send( data )
+         ? res.status( data.status || 500 ).send( { message: data.message } )
+         : res.send( data )
    } )
 }
 
-exports.getByTypeId = ( req, res ) => {
-   const { type, id } = req.params
+exports.imgData = ( req, res ) => {
 
-   multi.getByTypeId( type, id )
-   .then( ( { err, data } ) => {
-      err 
-      ? res.status( data.status || 500 ).send( { message: data.message } )
-               : res.send( data )
-   } )
+   multi.imgData()
+   .then( data => res.send( data ) )
+}
+
+exports.getByTypeId = ( req, res ) => {
+   
+   multi.getByTypeId( req.params )
+   .then( data => res.send( data ) )
 }

@@ -9,18 +9,16 @@ exports.search = searchWords => {
    return axios
    .get( `${ urlTmdb }/search/multi?query=${ searchWords }&${ apiKey }&${ apiLang }` )
    .then( res => res.data )
-   .then( ( { results } ) => {
-      
-      return { error: false, data: results }
+   .then( data => {
+      return { error: false, data: data.results } 
    } )
    .catch( err => {
       console.log( err )
-      
       return { error: true, data: err }
    } )
 }
 
-exports.urlImg = () => {
+exports.imgData = () => {
 
    return axios
    .get( `${ urlTmdb }/configuration?${ apiKey }` )
@@ -28,7 +26,7 @@ exports.urlImg = () => {
    .then( data => data.images )
 } 
 
-exports.getByTypeId = ( type, id ) => {
+exports.getByTypeId = ( { type, id } ) => {
 
    return axios
    .get( `${ urlTmdb }/${ type }/${ id }?${ apiKey }&${ apiLang }` )
