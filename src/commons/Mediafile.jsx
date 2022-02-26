@@ -6,14 +6,14 @@ export const Mediafile = (  ) => {
    let [ titulo, setTitulo ] = useState(""),
       [ descripcion, setDescripcion ] = useState(""),
       [ imgPath, setImgPath ] = useState(""),
-      [ urlImg, setUrlImg ] = useState(""),
+      [ urlBaseImg, setUrlBaseImg ] = useState(""),
       [ imgSize, setImgSize ] = useState("")
 
    const { type, id } = useParams()
    
    useEffect( () => {
       axios
-      .get( `/api/multi/${ type }/${ id }` )
+      .get( `/api/${ type }/${ id }` )
       .then( res => res.data )
       .then( result => { 
          
@@ -22,10 +22,10 @@ export const Mediafile = (  ) => {
          setImgPath( result[ "poster_path" ] || result[ "profile_path" ] )
    
          axios
-         .get( `/api/multi/imgData` )
+         .get( `/api/search/img_data` )
          .then( res => res.data )
          .then( imgData => { 
-            setUrlImg( imgData[ "secure_base_url" ] )
+            setUrlBaseImg( imgData[ "secure_base_url" ] )
             setImgSize( imgData[ "poster_sizes" ] )
          } )
    
@@ -33,11 +33,17 @@ export const Mediafile = (  ) => {
    
    }, [type, id])
 
+   const urlImg = () => {
+      return ( 
+         imgSize[ 1 ] && imgPath
+         ? `${ urlBaseImg }${ imgSize[ 1 ] }${ imgPath }` 
+         : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3PHMucJhoigq6aEtUEndZFifYoICA6VNXyg&usqp=CAU" )
+   }
+
    return (
       <div>
-         <img src = { imgSize[ 1 ] && imgPath 
-                     ? `${ urlImg }${ imgSize[ 1 ] }${ imgPath }` 
-                     : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3PHMucJhoigq6aEtUEndZFifYoICA6VNXyg&usqp=CAU"} 
+         <img 
+            src = { urlImg() } 
             alt = { titulo || "" }/>
 
          <h1>{ titulo || "" }</h1>

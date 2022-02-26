@@ -11,7 +11,7 @@ export const App = () => {
          <Link to = "/">
             <h1>¡Movie BASE!</h1></Link>
 
-         <Link to = "/api/multi/search">
+         <Link to = "/search/any">
             <h3>Buscar</h3></Link>
 
         <div>
@@ -19,10 +19,10 @@ export const App = () => {
                <Route path = "/" 
                   element = { <></> } />
             
-               <Route path = "/api/multi/search" 
+               <Route path = "/search/any" 
                   element = { <Search /> } />
             
-               <Route path = "/api/multi/:type/:id" 
+               <Route path = "/:type/:id" 
                   element = { <Mediafile /> } />
             
                <Route path = "*" 

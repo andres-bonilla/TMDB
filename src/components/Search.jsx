@@ -6,21 +6,21 @@ export const Search = () => {
 
    let [ urlBaseImg, setUrlBaseImg ] = useState( "" ),
       [ imgSize, setImgSize ] = useState( "" ),
-      [ searchWords, setSearchWords ] = useState(""),
+      [ searchWords, setSearchWords ] = useState( "" ),
       [ results, setResults ] = useState( [] )
 
    useEffect( () => {
-      if (searchWords) {
+      if ( searchWords ) {
       let busqueda = searchWords.replace(/ /g, "%20")
 
       axios
-      .get( `/api/multi/search?words=${ busqueda }` )
+      .get( `/api/search/any?by_words=${ busqueda }` )
       .then( res => res.data )
       .then( results => { 
-         if (!results.message) setResults(results)
+         if (!results.error) setResults(results)
          
          axios
-         .get( `/api/multi/imgData` )
+         .get( `/api/search/img_data` )
          .then( res => res.data )
          .then( imgData => { 
             setUrlBaseImg( imgData[ "secure_base_url" ] )
@@ -35,11 +35,10 @@ export const Search = () => {
       setSearchWords(e.target.value)
    }
 
-   const urlImg = ( element ) => {
-      return (
-         imgSize[ 1 ] && ( element["poster_path"] || element["profile_path" ] )
-         ? `${ urlBaseImg }${ imgSize[ 1 ] }${ element[ "poster_path" ] || element[ "profile_path" ] }` 
-         : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3PHMucJhoigq6aEtUEndZFifYoICA6VNXyg&usqp=CAU" )
+   const urlImg = element => {
+         if (imgSize[ 1 ] && ( element["poster_path"] || element["profile_path" ] ))
+            return `${ urlBaseImg }${ imgSize[ 1 ] }${ element[ "poster_path" ] || element[ "profile_path" ] }` 
+         return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3PHMucJhoigq6aEtUEndZFifYoICA6VNXyg&usqp=CAU"
    }
 
    return (
@@ -53,9 +52,9 @@ export const Search = () => {
             { results.map( (result) => {
                return (
                   <div key = {result.id}>
-                     <Link to = {`/api/multi/${ result[ "media_type" ] }/${ result.id }` } >
+                     <Link to = {`/${ result[ "media_type" ] }/${ result.id }` } >
                         <img 
-                           src = { urlImg(result) } 
+                           src = { urlImg( result ) } 
                            alt = { `${ result.name || result["original_title"] }` }/>
                   
                         <h3>{ result.name || result["original_title"] }</h3></Link></div> )

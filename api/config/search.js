@@ -4,10 +4,10 @@ const apiKey = "api_key=c9b9995a47cd29251414aa37ee7df674",
       urlTmdb = "https://api.themoviedb.org/3",
       apiLang = "language=es"
 
-exports.search = searchWords => {
+exports.anyByWords = words => {
 
    return axios
-   .get( `${ urlTmdb }/search/multi?query=${ searchWords }&${ apiKey }&${ apiLang }` )
+   .get( `${ urlTmdb }/search/multi?query=${ words }&${ apiKey }&${ apiLang }` )
    .then( res => res.data )
    .then( data => {
       return { error: false, data: data.results } 
@@ -25,10 +25,3 @@ exports.imgData = () => {
    .then( res => res.data )
    .then( data => data.images )
 } 
-
-exports.getByTypeId = ( { type, id } ) => {
-
-   return axios
-   .get( `${ urlTmdb }/${ type }/${ id }?${ apiKey }&${ apiLang }` )
-   .then( res => res.data )
-}

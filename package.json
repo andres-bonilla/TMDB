@@ -1,6 +1,6 @@
 {
   "name": "moviebase",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Una pagina de peliculas",
   "private": true,
   "dependencies": {
@@ -39,7 +39,8 @@
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
-      "last 1 safari version"
+      "last 1 safari version",
+      "last 1 opera version"
     ]
   },
   "devDependencies": {
