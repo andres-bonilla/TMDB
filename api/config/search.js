@@ -1,13 +1,10 @@
 const axios = require( "axios" )
-
-const apiKey = "api_key=c9b9995a47cd29251414aa37ee7df674",
-      urlTmdb = "https://api.themoviedb.org/3",
-      apiLang = "language=es"
+const { urlSearchMaker } = require("./tools")
 
 exports.anyByWords = words => {
 
    return axios
-   .get( `${ urlTmdb }/search/multi?query=${ words }&${ apiKey }&${ apiLang }` )
+   .get( urlSearchMaker( "multi", words ) )
    .then( res => res.data )
    .then( data => {
       return { error: false, data: data.results } 
@@ -18,10 +15,44 @@ exports.anyByWords = words => {
    } )
 }
 
-exports.imgData = () => {
+exports.movieByWords = words => {
 
    return axios
-   .get( `${ urlTmdb }/configuration?${ apiKey }` )
+   .get( urlSearchMaker( "movie", words ) )
    .then( res => res.data )
-   .then( data => data.images )
-} 
+   .then( data => {
+      return { error: false, data: data.results } 
+   } )
+   .catch( err => {
+      console.log( err )
+      return { error: true, data: err }
+   } )
+}
+
+exports.tvByWords = words => {
+
+   return axios
+   .get( urlSearchMaker( "tv", words ) )
+   .then( res => res.data )
+   .then( data => {
+      return { error: false, data: data.results } 
+   } )
+   .catch( err => {
+      console.log( err )
+      return { error: true, data: err }
+   } )
+}
+
+exports.personByWords = words => {
+
+   return axios
+   .get( urlSearchMaker( "person", words ) )
+   .then( res => res.data )
+   .then( data => {
+      return { error: false, data: data.results } 
+   } )
+   .catch( err => {
+      console.log( err )
+      return { error: true, data: err }
+   } )
+}

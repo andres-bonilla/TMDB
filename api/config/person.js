@@ -1,12 +1,9 @@
-const axios = require( "axios" )
+const axios = require( "axios" ),
+      { urlIdMaker } = require("./tools")
 
-const apiKey = "api_key=c9b9995a47cd29251414aa37ee7df674",
-      urlTmdb = "https://api.themoviedb.org/3",
-      apiLang = "language=es"
-
-exports.getById = ( id ) => {
+exports.getById = id => {
 
    return axios
-   .get( `${ urlTmdb }/person/${ id }?${ apiKey }&${ apiLang }` )
+   .get( urlIdMaker( "person", id ) )
    .then( res => res.data )
 }

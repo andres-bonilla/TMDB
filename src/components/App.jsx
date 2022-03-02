@@ -22,6 +22,18 @@ export const App = () => {
                <Route path = "/search/any" 
                   element = { <Search /> } />
             
+               <Route path = "/search/movie_or_tv" 
+                  element = { <Search /> } />
+            
+               <Route path = "/search/movie" 
+                  element = { <Search /> } />
+            
+               <Route path = "/search/tv" 
+                  element = { <Search /> } />
+            
+               <Route path = "/search/person" 
+                  element = { <Search /> } />
+            
                <Route path = "/:type/:id" 
                   element = { <Mediafile /> } />
             

@@ -4,6 +4,9 @@ const express = require( "express" ),
 const searchRouter = express.Router()
 
 searchRouter.get( "/any", search.anyByWords )
-searchRouter.get( "/img_data", search.imgData )
+searchRouter.get( "/movie_or_tv", search.movieOrTvByWords )
+searchRouter.get( "/movie", search.movieByWords )
+searchRouter.get( "/tv", search.tvByWords )
+searchRouter.get( "/person", search.personByWords )
 
 module.exports = searchRouter
