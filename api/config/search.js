@@ -1,5 +1,5 @@
-const axios = require( "axios" )
-const { urlSearchMaker } = require("./tools")
+const axios = require( "axios" ),
+      { urlSearchMaker } = require("./utils/utils")
 
 exports.anyByWords = words => {
 

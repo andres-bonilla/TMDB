@@ -1,42 +1,51 @@
-import React from "react"
+import axios from "axios"
+import React, { useEffect } from "react"
 import { Routes, Route } from "react-router"
-import { Link, Navigate } from "react-router-dom"
-import { Mediafile } from "../commons/Mediafile"
+import { Navigate } from "react-router-dom"
+import { useDispatch } from  "react-redux"
+import { setImg } from "../store/img"
+import { Mediafile } from "../components/Mediafile"
 import { Search } from "./Search"
+import { Footbar } from "./Footbar"
+import { Navbar } from "./Navbar"
+import { Access } from "./Access"
+import { Enroll } from "./Enroll"
 
 export const App = () => {
+   const dispatch = useDispatch()
+
+   useEffect ( () => {
+      
+      axios
+      .get( "/api/data/img_data" )
+      .then( ( { data } ) => { 
+         dispatch( setImg( `${ data[ "secure_base_url" ] }${ data[ "poster_sizes" ][ 1 ] }` ) )
+      } )
+   }, [] ) // eslint-disable-line react-hooks/exhaustive-deps
 
    return (
       <div>
-         <Link to = "/">
-            <h1>¡Movie BASE!</h1></Link>
+         <Navbar />
 
-         <Link to = "/search/any">
-            <h3>Buscar</h3></Link>
-
-        <div>
+         <div>
             <Routes>
                <Route path = "/" 
                   element = { <></> } />
             
-               <Route path = "/search/any" 
-                  element = { <Search /> } />
-            
-               <Route path = "/search/movie_or_tv" 
-                  element = { <Search /> } />
-            
-               <Route path = "/search/movie" 
-                  element = { <Search /> } />
-            
-               <Route path = "/search/tv" 
-                  element = { <Search /> } />
-            
-               <Route path = "/search/person" 
+               <Route path = "/access" 
+                  element = { <Access /> } />
+               
+               <Route path = "/enroll" 
+                  element = { <Enroll /> } />
+               
+               <Route path = "/search/:type" 
                   element = { <Search /> } />
             
                <Route path = "/:type/:id" 
                   element = { <Mediafile /> } />
             
                <Route path = "*" 
-                  element = { <Navigate to = { "/" } /> } /></Routes></div></div> )
+                  element = { <Navigate to = { "/" } /> } /></Routes></div>
+         
+         <Footbar /></div> )
 }

@@ -1,5 +1,5 @@
 const search = require( "../config/search" ),
-      { movieTvFilter } = require("./tools")
+      { movieTvFilter } = require("./utils/utils")
 
 
 const resError = ( res, { status, message } ) => 

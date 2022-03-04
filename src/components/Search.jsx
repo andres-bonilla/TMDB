@@ -1,130 +1,79 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useNavigate } from 'react-router'
-import { Link } from "react-router-dom"
+import { Card } from "../commons/Card"
 
 export const Search = () => {
-
-   let [ urlBaseImg, setUrlBaseImg ] = useState( "" ),
-      [ imgSize, setImgSize ] = useState( "" ),
+   let [ check, setCheck ] = useState( [ false, false, false ] ),
       [ searchWords, setSearchWords ] = useState( "" ),
-      [ searchMovie, setSearchMovie ] = useState( false ),
-      [ searchTv, setSearchTv ] = useState( false ),
-      [ searchPerson, setSearchPerson ] = useState( false ),
-      [ results, setResults ] = useState( [] ),
-      [ controller, setController ] = useState( null )
-      
+      [ mediaType, setMediaType ] = useState( "any" ),
+      [ oldSearch, setOldSearch ] = useState( null ),
+      [ results, setResults ] = useState( [] )
 
    const navigate = useNavigate()
 
    useEffect( () => {
-
-      if ( searchWords ) {
-         let busqueda = searchWords.replace(/ /g, "%20")
+      if ( searchWords && ( searchWords[ searchWords.length - 1 ] !== " " ) ) {
+         const words = searchWords.replace(/ /g, "%20")
          
-         let mediaType = searchMovie ? "movie" : ( searchTv ? "tv" : ( searchPerson ? "person" : "any" ) )
-            mediaType = searchMovie && searchTv ? "movie_or_tv" : mediaType
-
-         const cont = new AbortController();
-         setController( cont )
+         setOldSearch( new AbortController() )
 
          axios
-         .get( `/api/search/${ mediaType }?by_words=${ busqueda }`, { signal: controller ? controller.signal : null} )
-         .then( res => res.data )
-         .then( results => { 
-            if ( !results.error ) setResults( results )
-         
-            navigate(`/search/${ mediaType }?by_words=${ busqueda }` )
-
-            if ( urlBaseImg === "" ) {
-               axios
-               .get( "/api/tools/img_data" )
-               .then( res => res.data )
-               .then( imgData => { 
-                  setUrlBaseImg( imgData[ "secure_base_url" ] )
-                  setImgSize( imgData[ "poster_sizes" ] )
-               } )
-            }
+         .get( `/api/search/${ mediaType }?by_words=${ words }`, 
+               { signal: oldSearch ? oldSearch.signal : null} )
+         .then( ( { data } ) => { 
+            if ( !data.error ) setResults( data )
+            navigate(`/search/${ mediaType }?by_words=${ words }` )
          } )
-         .catch ( err => { console.log(`Too FAST\n   Search of "${ busqueda }" is ${ err.message }` ) } )
-      }
+         .catch ( err => { 
+            console.log(`Too FAST\n   Search of "${ words }" is ${ err.message }` ) } )
 
-      return () => {
-         if ( searchWords.length > 1 && controller ) controller.abort()
+         return () => { if ( searchWords.length > 1 && oldSearch ) oldSearch.abort() }
       }
-   }, [searchWords, searchMovie, searchTv, searchPerson] )
+   }, [ searchWords, mediaType ] )
+
+   const checkHandler = ( esFalso, negado ) => {
+      check = [ esFalso[ 0 ] && check[ 0 ], esFalso[ 1 ] && check[ 1 ], esFalso[ 2 ] && check[ 2 ] ]
+      check[ negado ] = !check[ negado ]
+
+      setMediaType( 
+         check[ 0 ] && check[ 1 ] 
+         ? "movie_or_tv" 
+         : ( check[ 0 ] ? "movie" : ( check[ 1 ] ? "tv" : ( check[ 2 ] ? "person" : "any" ) ) ) )
+      
+      setCheck( check )
+   }
 
    const changeHandler = e => {
       e.preventDefault()
-      setSearchWords(e.target.value)
-   }
-
-   const searchMovieHandler = () => {
-      if ( !searchMovie )
-         setSearchPerson( false )
-      setSearchMovie( !searchMovie )
-   }
-
-   const searchTvHandler = () => {
-      if ( !searchTv )
-         setSearchPerson( false )
-      setSearchTv( !searchTv )
-   }
-
-   const searchPersonHandler = () => {
-      if ( !searchPerson ) {
-         setSearchMovie( false )
-         setSearchTv( false ) 
-      }
-      setSearchPerson( !searchPerson )
-   }
-
-   const urlImg = element => {
-      if (imgSize[ 1 ] && ( element["poster_path"] || element["profile_path" ] ))
-         return `${ urlBaseImg }${ imgSize[ 1 ] }${ element[ "poster_path" ] || element[ "profile_path" ] }` 
-      return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3PHMucJhoigq6aEtUEndZFifYoICA6VNXyg&usqp=CAU"
+      setSearchWords( e.target.value )
    }
 
    return (
       <><form >
-            <input onChange = { (changeHandler) } 
-               value = { searchWords } 
-               type = "text"  
-               name = "words" />
+            <input onChange = { changeHandler } 
+               value = { searchWords } type = "text"  name = "words" />
             
             <label>
-               <input onChange={ searchMovieHandler }
-                  checked={ searchMovie } 
-                  type="checkbox" 
-                  name="movie" />
+               <input onChange = { () => checkHandler( [ true, true, false ], 0 ) }
+                  checked = { check[ 0 ] } type = "checkbox" name = "movie" />
                 
                Peliculas</label>
             
             <label>
-               <input onChange={ searchTvHandler }
-                  checked={ searchTv } 
-                  type="checkbox" 
-                  name="tv" />
+               <input onChange = { () => checkHandler( [ true, true, false ], 1 ) }
+                  checked = { check[ 1 ] } type = "checkbox" name = "tv" />
 
                Tv</label>
 
             <label>
-               <input onChange={ searchPersonHandler }
-                  checked={ searchPerson } 
-                  type="checkbox" 
-                  name="person" />
+               <input onChange = { () => checkHandler( [ false, false, true ], 2 ) }
+                  checked = { check[ 2 ] } type = "checkbox" name = "person" />
              
                Persona</label></form>
 
             <div>
                { results.map( result => {
                   return (
-                     <div key = { result.id }>
-                        <Link to = {`/${ result[ "media_type" ] }/${ result.id }` } >
-                           <img src = { urlImg( result ) } 
-                              alt = { `${ result.name || result[ "original_title" ] }` }/>
-                  
-                           <h3>{ result.name || result[ "original_title" ] }</h3></Link></div> ) } ) }
-            
-            </div></> )
+                     <Card data = { result } key = { result.id }/>) } ) }</div></> )
 }
