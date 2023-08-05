@@ -1,0 +1,39 @@
+#resultsBox {
+  display: grid;
+  width: 100%;
+  margin: 32px 32px;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, 170px);
+  justify-content: center;
+}
+
+.cardBox {
+  width: min-content;
+  padding: 8px;
+  border-radius: 16px;
+  background-color: white;
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+}
+
+.cardImg {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.cardBox a {
+  text-decoration: none;
+  color: #08224c;
+}
+
+/* .cardTitleBox {
+  display: inline-block;
+  background-color: blue;
+  height: calc(100%-231px);
+  width: 100%;
+} */
+
+.cardTitle {
+  margin: 6px 0px;
+  text-align: center;
+  font-size: 1em;
+}
