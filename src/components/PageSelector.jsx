@@ -6,23 +6,32 @@ import { nextPage, prevPage } from "../store/searchSlice";
 export const PageSelector = () => {
   const dispatch = useDispatch();
 
-  const page = useSelector((state) => state.search.page);
+  const { page, maxElementsGrid, pageData } = useSelector(
+    (state) => state.search
+  );
 
   return (
     <div id="pageSelector">
       <button
         className="buttons pageButton"
         type="button"
-        name="Next"
+        name="Prev"
+        disabled={page === 1}
         onClick={() => dispatch(prevPage())}
       >
-        anterior
+        Anterior
       </button>
-      <span>{page}</span>
+      <span
+        className="buttons pageButton"
+        style={{ width: "30px", textAlign: "center" }}
+      >
+        {page}
+      </span>
       <button
         className="buttons pageButton"
         type="button"
         name="Next"
+        disabled={pageData.length < maxElementsGrid}
         onClick={() => dispatch(nextPage())}
       >
         Siguiente

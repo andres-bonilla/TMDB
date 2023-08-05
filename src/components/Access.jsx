@@ -45,7 +45,7 @@ export const Access = () => {
       <h2>¡Bienvenido!</h2>
 
       <form onSubmit={submitHandler}>
-        <label for="email">Correo electronico</label>
+        <label htmlFor="email">Correo electronico</label>
         <div className="logSignInput">
           <input
             id="email"
@@ -56,7 +56,7 @@ export const Access = () => {
           />
         </div>
 
-        <label for="password">Contraseña</label>
+        <label htmlFor="password">Contraseña</label>
         <div className="logSignInput">
           <input
             id="password"

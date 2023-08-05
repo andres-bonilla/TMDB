@@ -31,6 +31,13 @@ export const searchSlice = createSlice({
     prevPage(state, action) {
       state.page = state.page - 1;
     },
+    resetSearch(state, action) {
+      state.words = "";
+      state.mediaType = "any";
+      state.page = 1;
+      state.pageData = [];
+      state.status = "idle";
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -85,6 +92,7 @@ export const {
   setMaxElementsGrid,
   nextPage,
   prevPage,
+  resetSearch,
 } = searchSlice.actions;
 
 export default searchSlice.reducer;

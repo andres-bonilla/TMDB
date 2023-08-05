@@ -41,7 +41,7 @@ export const Enroll = () => {
       <h2>Registro</h2>
 
       <form onSubmit={submitHandler}>
-        <label for="email">Correo electronico</label>
+        <label htmlFor="email">Correo electronico</label>
         <div className="logSignInput">
           <input
             id="email"
@@ -52,7 +52,7 @@ export const Enroll = () => {
           />
         </div>
 
-        <label for="password">Contraseña</label>
+        <label htmlFor="password">Contraseña</label>
         <div className="logSignInput">
           <input
             id="password"

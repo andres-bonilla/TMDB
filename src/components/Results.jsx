@@ -37,7 +37,7 @@ export const Results = () => {
       .getPropertyValue("grid-template-columns")
       .split(" ").length;
     dispatch(setMaxElementsGrid(columnCount * 6));
-  }, [columnsNumber]);
+  }, [columnsNumber]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (search.status === "pending") return <p>Loading...</p>;
 
@@ -47,8 +47,8 @@ export const Results = () => {
     <div id="resultsBox">
       <CheckTabs />
       <div id="resultsGrid">
-        {search.pageData.map((resultado) => {
-          return <Card data={resultado} key={resultado.id} />;
+        {search.pageData.map((resultado, index) => {
+          return <Card data={resultado} key={resultado.id * index} />;
         })}
       </div>
       <PageSelector />

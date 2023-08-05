@@ -22,11 +22,12 @@ export const Search = () => {
         if (search.words.length > 1 && oldSearch) oldSearch.abort();
       };
     }
-  }, [search.words, search.mediaType, search.maxElementsGrid, search.page]);
+  }, [search.words, search.mediaType, search.maxElementsGrid, search.page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const writeHandler = (e) => {
     e.preventDefault();
     if (search.words === e.target.value) return;
+    if (!e.target.value) return;
     dispatch(setSearchWords(e.target.value.replace(/ /g, "%20")));
   };
 
