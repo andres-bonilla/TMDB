@@ -44,7 +44,7 @@ export const Navbar = () => {
 
       <Search />
 
-      <div id="logInOut">
+      <div id="logButton">
         {isLog ? (
           <button
             className="buttons"

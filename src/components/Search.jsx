@@ -44,15 +44,13 @@ export const Search = () => {
 
   return (
     <div id="searchForm">
-      <form style={{ margin: "7px 0px" }}>
-        <div id="searchBox">
-          <input
-            onChange={changeHandler}
-            value={searchWords}
-            type="text"
-            name="words"
-          />
-        </div>
+      <form>
+        <input
+          onChange={changeHandler}
+          value={searchWords}
+          type="text"
+          name="words"
+        />
       </form>
     </div>
   );

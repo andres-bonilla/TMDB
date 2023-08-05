@@ -10,7 +10,7 @@ export const CheckTabs = () => {
 
   const checkHandler = (esFalso, negado) => {
     let checkb = check;
-    if (negado == 3) {
+    if (negado === 3) {
       checkb = [false, false, false];
     } else {
       checkb = [
