@@ -29,7 +29,7 @@ code {
   padding-top: 64px;
 }
 
-.button {
+.buttons {
   /* Remueve la apariencia por defecto */
   appearance: none;
   -webkit-appearance: none;

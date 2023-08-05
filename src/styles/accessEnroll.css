@@ -1,4 +1,4 @@
-#logBox {
+.logSignBox {
   display: inline-block;
   padding: 32px;
   margin: 32px;
@@ -8,12 +8,12 @@
   color: #08224c;
 }
 
-#logBox h2 {
+.logSignBox h2 {
   margin: 0px;
   font-size: 1.3em;
 }
 
-#logBox label {
+.logSignBox label {
   display: block;
   margin-bottom: 4px;
   margin-top: 16px;
@@ -21,11 +21,11 @@
   font-size: 0.7em;
 }
 
-.logInBox {
+.logSignInput {
   display: flex;
 }
 
-.logInBox input {
+.logSignInput input {
   width: 100%;
   outline: none;
   border: 0;
@@ -35,7 +35,7 @@
   font-size: 1em;
 }
 
-.logInBox input:focus {
+.logSignInput input:focus {
   width: 100%;
   outline: none;
   border: 0;
@@ -45,7 +45,7 @@
   font-size: 1em;
 }
 
-#logInButton {
+.logSignButton {
   width: 100%;
   padding: 6px;
   margin-top: 16px;
@@ -57,14 +57,14 @@
   color: white;
 }
 
-#enrollBox {
+.linkBox {
   display: flex;
   height: 32px;
   justify-content: center;
   align-items: center;
 }
 
-.enrollText {
+.logSignText {
   display: inline;
   margin-right: 3px;
   font-size: 0.7em;

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setLog } from "../store/log";
-import "../styles/access.css";
+import "../styles/accessEnroll.css";
 
 export const Access = () => {
   const navigate = useNavigate(),
@@ -25,7 +25,7 @@ export const Access = () => {
             setMensaje(data);
           } else {
             dispatch(setLog(true));
-            setMensaje("Sesion iniciada con exito");
+            setMensaje("");
             navigate("/");
           }
         });
@@ -49,13 +49,12 @@ export const Access = () => {
   };
 
   return (
-    <div id="logBox">
+    <div className="logSignBox">
       <h2>¡Bienvenido!</h2>
 
       <form onSubmit={submitHandler}>
-        <p style={{ color: "red" }}>{mensaje}</p>
         <label for="email">Correo electronico</label>
-        <div className="logInBox">
+        <div className="logSignInput">
           <input
             id="email"
             type="email"
@@ -66,7 +65,7 @@ export const Access = () => {
         </div>
 
         <label for="password">Contraseña</label>
-        <div className="logInBox">
+        <div className="logSignInput">
           <input
             id="password"
             type="text"
@@ -77,18 +76,22 @@ export const Access = () => {
         </div>
 
         <button
-          id="logInButton"
-          className="button"
+          className="buttons logSignButton"
           type="submit"
           name="Iniciar sesion"
           disabled={!email || !password}
         >
-          Iniciar sesion
+          Iniciar sesión
         </button>
       </form>
-      <div id="enrollBox">
-        <p className="enrollText">¿No tienes cuenta?</p>
-        <Link to="/enroll" className="enrollText">
+      {mensaje ? (
+        <p className="logSignText" style={{ color: "red" }}>
+          {mensaje}
+        </p>
+      ) : null}
+      <div className="linkBox">
+        <p className="logSignText">¿No tienes cuenta?</p>
+        <Link to="/enroll" className="logSignText">
           Créala
         </Link>
       </div>

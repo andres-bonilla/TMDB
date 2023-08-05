@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import "../styles/accessEnroll.css";
 
 export const Enroll = () => {
   let [email, setEmail] = useState(""),
@@ -9,7 +10,7 @@ export const Enroll = () => {
     [enviar, setEnviar] = useState(false),
     [mensaje, setMensaje] = useState("");
 
-  // const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (enviar) {
@@ -20,7 +21,8 @@ export const Enroll = () => {
           if (error) {
             setMensaje(data);
           } else {
-            setMensaje("Registrado con exito");
+            setMensaje("");
+            navigate("/access");
           }
         });
     }
@@ -43,39 +45,52 @@ export const Enroll = () => {
   };
 
   return (
-    <div>
+    <div className="logSignBox">
       <h2>Registro</h2>
 
-      <p>Llene el siguente formulario para registrarse</p>
-
       <form onSubmit={submitHandler}>
-        <p style={{ color: "red" }}>{mensaje}</p>
-        <label>
-          E-mail
+        <label for="email">Correo electronico</label>
+        <div className="logSignInput">
           <input
-            onChange={emailHandler}
-            value={email}
+            id="email"
             type="email"
             name="email"
+            value={email}
+            onChange={emailHandler}
           />
-        </label>
+        </div>
 
-        <label>
-          Password
+        <label for="password">Contraseña</label>
+        <div className="logSignInput">
           <input
-            onChange={passwordHandler}
-            value={password}
+            id="password"
             type="text"
             name="password"
+            value={password}
+            onChange={passwordHandler}
           />
-        </label>
+        </div>
 
-        <button type="submit" name="Registrarse" disabled={!email || !password}>
+        <button
+          className="buttons logSignButton"
+          type="submit"
+          name="Iniciar sesion"
+          disabled={!email || !password}
+        >
           Registrarse
         </button>
       </form>
-
-      <Link to="/access">Iniciar sesion</Link>
+      {mensaje ? (
+        <p className="logSignText" style={{ color: "red" }}>
+          {mensaje}
+        </p>
+      ) : null}
+      <div className="linkBox">
+        <p className="logSignText">¿Ya tienes cuenta?</p>
+        <Link to="/access" className="logSignText">
+          Iniciar Sesión
+        </Link>
+      </div>
     </div>
   );
 };
