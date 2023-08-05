@@ -24,11 +24,11 @@ export const App = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (
+    let isNotSearch =
       !(searchWord === "") &&
-      (location.pathname === "/" || !(location.pathname[1] === "s"))
-    )
-      dispatch(resetSearch());
+      (location.pathname === "/" || !(location.pathname[1] === "s"));
+
+    if (isNotSearch) dispatch(resetSearch());
   }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -43,7 +43,11 @@ export const App = () => {
 
           <Route path="/enroll" element={<Enroll />} />
 
-          <Route path="/search/:type" element={<Results />} />
+          <Route path="/search" element={<Results />} />
+
+          <Route path="/search/:type/:words" element={<Results />} />
+
+          <Route path="/search/:type/:words/on/:page" element={<Results />} />
 
           <Route path="/:type/:id" element={<Mediafile />} />
 

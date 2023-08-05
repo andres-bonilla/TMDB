@@ -1,15 +1,19 @@
-import { Link } from "react-router-dom";
-import { urlImg } from "../utils/utils";
-import { useSelector } from "react-redux";
 import "../styles/results.css";
+import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { urlImg } from "../utils/utils";
 
-export const Card = ({ data }) => {
+export const Card = ({ data, media }) => {
   const urlBaseImg = useSelector((state) => state.img);
 
   return (
     <div className="card" key={data.id}>
       <div className="cardBox">
-        <Link to={`/${data["media_type"]}/${data.id}`} className="linkCardBox">
+        <Link
+          to={`/${data["media_type"] || media}/${data.id}`}
+          className="linkCardBox"
+        >
           <div className="cardImgBox">
             <img
               className="posterImg"

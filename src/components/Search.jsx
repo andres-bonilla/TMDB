@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getResult, setSearchWords } from "../store/searchSlice";
 
@@ -7,22 +7,26 @@ export const Search = () => {
   const navigate = useNavigate(),
     dispatch = useDispatch();
 
-  const [oldSearch, setOldSearch] = useState(null);
+  // let { type, words, page } = useParams();
+
+  // const [oldSearch, setOldSearch] = useState(null);
   const search = useSelector((state) => state.search);
 
   useEffect(() => {
     if (search.words && search.words[search.words.length - 1] !== " ") {
-      setOldSearch(new AbortController());
-      dispatch(getResult({ oldSearch }));
-      navigate(
-        `/search/${search.mediaType}?by_words=${search.words}&on_page=${search.page}`
-      );
-
-      return () => {
-        if (search.words.length > 1 && oldSearch) oldSearch.abort();
-      };
+      navigate(`/search/${search.mediaType}/${search.words}/on/${search.page}`);
     }
-  }, [search.words, search.mediaType, search.maxElementsGrid, search.page]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [search.words, search.mediaType, search.page, search.maxElementsGrid]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // useEffect(() => {
+  //   console.log(page);
+  //   setOldSearch(new AbortController());
+  //   dispatch(getResult({ oldSearch }));
+
+  //   return () => {
+  //     if (words.length > 1 && oldSearch) oldSearch.abort();
+  //   };
+  // }, [words, type, page, search.maxElementsGrid]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const writeHandler = (e) => {
     e.preventDefault();

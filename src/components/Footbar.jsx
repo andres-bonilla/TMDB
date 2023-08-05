@@ -1,4 +1,5 @@
 import "../styles/footbar.css";
+import React from "react";
 import tmdbLogo from "../essets/tmdb_logo.svg";
 
 export const Footbar = () => {

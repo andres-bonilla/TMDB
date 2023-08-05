@@ -1,10 +1,11 @@
 import "../styles/results.css";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setMaxElementsGrid } from "../store/searchSlice";
+import { getResult, setMaxElementsGrid } from "../store/searchSlice";
 import { PageSelector } from "./PageSelector";
 import { Card } from "../commons/Card";
 import { CheckTabs } from "./CheckTabs";
+import { useParams } from "react-router";
 
 export const Results = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,10 @@ export const Results = () => {
   const [columnsNumber, setColumnsNumber] = useState(0);
 
   const search = useSelector((state) => state.search);
+
+  let { type, words, page } = useParams();
+
+  const [oldSearch, setOldSearch] = useState(null);
 
   useEffect(() => {
     const handleColumnsNumber = () => {
@@ -39,6 +44,15 @@ export const Results = () => {
     dispatch(setMaxElementsGrid(columnCount * 6));
   }, [columnsNumber]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    setOldSearch(new AbortController());
+    dispatch(getResult({ oldSearch, words, type, page }));
+
+    return () => {
+      if (words.length > 1 && oldSearch) oldSearch.abort();
+    };
+  }, [words, type, page]); // eslint-disable-line react-hooks/exhaustive-deps
+
   if (search.status === "pending") return <p>Loading...</p>;
 
   if (search.status === "rejected") return <h1>Too FAST</h1>;
@@ -48,7 +62,13 @@ export const Results = () => {
       <CheckTabs />
       <div id="resultsGrid">
         {search.pageData.map((resultado, index) => {
-          return <Card data={resultado} key={resultado.id * index} />;
+          return (
+            <Card
+              data={resultado}
+              media={search.mediaType}
+              key={resultado.id * index}
+            />
+          );
         })}
       </div>
       <PageSelector />

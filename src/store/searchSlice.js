@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 
 const initialState = {
   words: "",
@@ -14,6 +15,12 @@ export const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
+    setSearch(state, action) {
+      const { words, type, page } = action.payload;
+      state.words = words || state.words;
+      state.mediaType = type || state.mediaType;
+      state.page = page || state.page;
+    },
     setSearchWords(state, action) {
       state.words = action.payload;
       state.page = 1;
@@ -56,9 +63,11 @@ export const searchSlice = createSlice({
 
 export const getResult = createAsyncThunk(
   "search/get",
-  async ({ oldSearch }, { getState }) => {
+  async ({ oldSearch, words, type, page }, { getState, dispatch }) => {
+    await dispatch(setSearch({ words, type, page }));
+
     const { search } = getState(),
-      address = `/api/search/${search.mediaType}?by_words=${search.words}`;
+      apiSearch = `/api/search/${search.mediaType}?by_words=${search.words}`;
 
     const { initial, initialPage, numOfPages } = searchIndex(search);
 
@@ -66,7 +75,7 @@ export const getResult = createAsyncThunk(
       data = {};
 
     for (let i = 0; i < numOfPages + 1; i++) {
-      data = await axios.get(`${address}&page=${initialPage + i}`, {
+      data = await axios.get(`${apiSearch}&on_page=${initialPage + i}`, {
         signal: oldSearch ? oldSearch.signal : null,
       });
       result = result.concat(data.data);
@@ -87,6 +96,7 @@ const searchIndex = ({ page: reqPage, maxElementsGrid: maxElements }) => {
 };
 
 export const {
+  setSearch,
   setSearchWords,
   setMediaType,
   setMaxElementsGrid,
