@@ -19,10 +19,15 @@
   border-radius: 16px 16px 0px 0px;
   background-color: white;
   box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+  border: 2px solid white;
+}
+
+.cardBox:hover {
+  border: 2px solid #08224c;
 }
 
 .cardImgBox {
-  margin: 6px 6px 0 6px;
+  margin: 4px 4px 0 4px;
 }
 
 .posterImg {
@@ -54,7 +59,7 @@
 }
 
 .cardButton1 {
-  width: 56px;
+  width: 53px;
   background-color: red;
 }
 .cardButton2 {
@@ -62,6 +67,6 @@
   background-color: yellow;
 }
 .cardButton3 {
-  width: 56px;
+  width: 53px;
   background-color: green;
 }
