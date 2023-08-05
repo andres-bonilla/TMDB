@@ -70,7 +70,7 @@ export const Enroll = () => {
           />
         </label>
 
-        <button type="submit" name="Registrarse">
+        <button type="submit" name="Registrarse" disabled={!email || !password}>
           Registrarse
         </button>
       </form>
