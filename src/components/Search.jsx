@@ -39,12 +39,13 @@ export const Search = () => {
 
   const changeHandler = (e) => {
     e.preventDefault();
+    if (searchWords === e.target.value) return;
     setSearchWords(e.target.value);
   };
 
   return (
     <div id="searchForm">
-      <form>
+      <form onSubmit={changeHandler}>
         <input
           onChange={changeHandler}
           value={searchWords}
