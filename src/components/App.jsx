@@ -21,10 +21,10 @@ export const App = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div>
+    <div id="container">
       <Navbar />
 
-      <div id="content" style={{ paddingTop: "70px" }}>
+      <div id="content">
         <Routes>
           <Route path="/" element={<></>} />
 

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setLog } from "../store/log";
+import "../styles/access.css";
 
 export const Access = () => {
   const navigate = useNavigate(),
@@ -48,32 +49,39 @@ export const Access = () => {
   };
 
   return (
-    <div>
-      <h2>Iniciar sesion</h2>
+    <div id="logBox">
+      <h2>Iniciar sesión</h2>
+
+      <p id="enrollText">¿No tienes cuenta?</p>
+      <Link to="/enroll">Créala</Link>
 
       <form onSubmit={submitHandler}>
         <p style={{ color: "red" }}>{mensaje}</p>
-        <label>
-          E-mail
+        <label for="email">Correo electronico</label>
+        <div className="logInBox">
           <input
+            id="email"
             type="email"
             name="email"
             value={email}
             onChange={emailHandler}
           />
-        </label>
+        </div>
 
-        <label>
-          Password
+        <label for="password">Contraseña</label>
+        <div className="logInBox">
           <input
+            id="password"
             type="text"
             name="password"
             value={password}
             onChange={passwordHandler}
           />
-        </label>
+        </div>
 
         <button
+          id="logInButton"
+          className="button"
           type="submit"
           name="Iniciar sesion"
           disabled={!email || !password}
@@ -81,8 +89,6 @@ export const Access = () => {
           Iniciar sesion
         </button>
       </form>
-
-      <Link to="/enroll">Registrarse</Link>
     </div>
   );
 };
