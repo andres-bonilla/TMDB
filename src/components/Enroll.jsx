@@ -7,31 +7,23 @@ import "../styles/accessEnroll.css";
 export const Enroll = () => {
   let [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
-    [enviar, setEnviar] = useState(false),
     [mensaje, setMensaje] = useState("");
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (enviar) {
-      axios
-        .post("/api/user/enroll", { email: email, password: password })
-        .then((res) => res.data)
-        .then(({ error, data }) => {
-          if (error) {
-            setMensaje(data);
-          } else {
-            setMensaje("");
-            navigate("/access");
-          }
-        });
-    }
-    setEnviar(false);
-  }, [enviar]);
-
   const submitHandler = (e) => {
     e.preventDefault();
-    setEnviar(true);
+    axios
+      .post("/api/user/enroll", { email: email, password: password })
+      .then((res) => res.data)
+      .then(({ error, data }) => {
+        if (error) {
+          setMensaje(data);
+        } else {
+          setMensaje("");
+          navigate("/access");
+        }
+      });
   };
 
   const emailHandler = (e) => {

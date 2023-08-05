@@ -1,41 +1,33 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLog } from "../store/log";
 import "../styles/accessEnroll.css";
 
 export const Access = () => {
+  let [email, setEmail] = useState(""),
+    [password, setPassword] = useState(""),
+    [mensaje, setMensaje] = useState("");
+
   const navigate = useNavigate(),
     dispatch = useDispatch();
 
-  let [email, setEmail] = useState(""),
-    [password, setPassword] = useState(""),
-    [entrar, setEntrar] = useState(false),
-    [mensaje, setMensaje] = useState("");
-
-  useEffect(() => {
-    if (entrar) {
-      axios
-        .post("/api/user/access", { email: email, password: password })
-        .then((res) => res.data)
-        .then(({ error, data }) => {
-          if (error) {
-            setMensaje(data);
-          } else {
-            dispatch(setLog(true));
-            setMensaje("");
-            navigate("/");
-          }
-        });
-    }
-    setEntrar(false);
-  }, [entrar]);
-
   const submitHandler = (e) => {
     e.preventDefault();
-    setEntrar(true);
+    axios
+      .post("/api/user/access", { email: email, password: password })
+      .then((res) => res.data)
+      .then(({ error, data }) => {
+        if (error) {
+          setMensaje(data);
+        } else {
+          dispatch(setLog(true));
+          setMensaje("");
+          navigate("/");
+        }
+      });
   };
 
   const emailHandler = (e) => {

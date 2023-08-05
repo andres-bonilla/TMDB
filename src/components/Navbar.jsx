@@ -14,29 +14,19 @@ export const Navbar = () => {
 
   const isLog = useSelector((state) => state.log);
 
-  const [cerrar, setCerrar] = useState(false),
-    [mensaje, setMensaje] = useState("");
-
-  useEffect(() => {
-    if (cerrar) {
-      axios
-        .get("/api/user/leave")
-        .then((res) => res.data)
-        .then(({ error, data }) => {
-          if (error) {
-            setMensaje(data);
-          } else {
-            dispatch(setLog(false));
-            navigate(data);
-          }
-        });
-    }
-    setCerrar(false);
-  }, [cerrar]);
-
   const logOut = (e) => {
     e.preventDefault();
-    setCerrar(true);
+    axios
+      .get("/api/user/leave")
+      .then((res) => res.data)
+      .then(({ error, data }) => {
+        if (error) {
+          console.log(data);
+        } else {
+          dispatch(setLog(false));
+          navigate(data);
+        }
+      });
   };
 
   const logIn = (e) => {
@@ -57,7 +47,7 @@ export const Navbar = () => {
       <div id="logInOut">
         {isLog ? (
           <button
-            class="button"
+            className="buttons"
             style={{ backgroundColor: "red" }}
             type="button"
             name="Cerrar sesion"
@@ -67,7 +57,7 @@ export const Navbar = () => {
           </button>
         ) : (
           <button
-            class="button"
+            className="buttons"
             style={{ backgroundColor: "green" }}
             type="button"
             name="Iniciar sesion"
