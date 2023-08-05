@@ -35,7 +35,7 @@ passport.use(
         .then((usuario) => {
           if (!usuario)
             return done(null, false, {
-              message: "Email no registrado",
+              message: "Email y/o contraseña incorrectos",
             });
 
           return usuario

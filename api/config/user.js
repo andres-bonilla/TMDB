@@ -27,7 +27,7 @@ exports.access = ({ user, session }) => {
   }
 };
 
-/*exports.leave = (req) => {
+exports.leave = (req) => {
   req.logout();
-  return '/access';
-};*/
+  return Promise.resolve({ error: false, data: "/" });
+};

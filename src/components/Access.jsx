@@ -1,15 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export const Access = () => {
+  const navigate = useNavigate();
+
   let [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
-    [enviar, setEnviar] = useState(false),
+    [entrar, setEntrar] = useState(false),
+    [logOn, setLogOn] = useState(false),
+    [cerrar, setCerrar] = useState(false),
     [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
-    if (enviar) {
+    if (entrar) {
       axios
         .post("/api/user/access", { email: email, password: password })
         .then((res) => res.data)
@@ -17,16 +22,34 @@ export const Access = () => {
           if (error) {
             setMensaje(data);
           } else {
+            setLogOn(true);
             setMensaje("Sesion iniciada con exito");
           }
         });
     }
-    setEnviar(false);
-  }, [enviar]);
+    setEntrar(false);
+  }, [entrar]);
+
+  useEffect(() => {
+    if (cerrar) {
+      axios
+        .get("/api/user/leave")
+        .then((res) => res.data)
+        .then(({ error, data }) => {
+          if (error) {
+            setMensaje(data);
+          } else {
+            setLogOn(false);
+            navigate(data);
+          }
+        });
+    }
+    setCerrar(false);
+  }, [cerrar]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setEnviar(true);
+    setEntrar(true);
   };
 
   const emailHandler = (e) => {
@@ -39,6 +62,11 @@ export const Access = () => {
     setPassword(e.target.value);
   };
 
+  const logOutHandler = (e) => {
+    e.preventDefault();
+    setCerrar(true);
+  };
+
   return (
     <div>
       <h2>Iniciar sesion</h2>
@@ -48,20 +76,20 @@ export const Access = () => {
         <label>
           E-mail
           <input
-            onChange={emailHandler}
-            value={email}
             type="email"
             name="email"
+            value={email}
+            onChange={emailHandler}
           />
         </label>
 
         <label>
           Password
           <input
-            onChange={passwordHandler}
-            value={password}
             type="text"
             name="password"
+            value={password}
+            onChange={passwordHandler}
           />
         </label>
 
@@ -71,6 +99,14 @@ export const Access = () => {
           disabled={!email || !password}
         >
           Iniciar sesion
+        </button>
+        <button
+          type="button"
+          name="Cerrar sesion"
+          disabled={!logOn}
+          onClick={logOutHandler}
+        >
+          Cerrar sesion
         </button>
       </form>
 

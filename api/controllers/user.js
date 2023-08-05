@@ -8,6 +8,6 @@ exports.access = (req, res) => {
   user.access(req).then((data) => res.status(201).send(data));
 };
 
-/*exports.leave = (req, res) => {
-  user.leave(req).then((data) => res.status(201).redirect(data));
-}*/
+exports.leave = (req, res) => {
+  user.leave(req).then((data) => res.status(201).send(data));
+};

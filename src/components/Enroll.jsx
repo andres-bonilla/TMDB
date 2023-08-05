@@ -55,7 +55,7 @@ export const Enroll = () => {
           <input
             onChange={emailHandler}
             value={email}
-            type="text"
+            type="email"
             name="email"
           />
         </label>

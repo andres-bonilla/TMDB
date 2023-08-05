@@ -16,7 +16,7 @@ userRouter.post("/enroll", user.enroll);
 
 userRouter.get("/access", user.access);
 
-/*userRouter.get('/leave', user.leave);*/
+userRouter.get("/leave", user.leave);
 
 /*Este middleware es para verificar si la sesion esta activa
 function auth(req, res, next) {
