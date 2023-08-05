@@ -1,23 +1,31 @@
 #resultsBox {
   display: grid;
   width: 100%;
-  margin: 32px 32px;
-  gap: 16px;
-  grid-template-columns: repeat(auto-fill, 170px);
+  margin: 24px 24px;
+  gap: 16px 12px;
+  grid-template-columns: repeat(auto-fill, 144px);
   justify-content: center;
 }
 
 .cardBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: min-content;
-  padding: 8px;
-  border-radius: 16px;
+  border-radius: 16px 16px 0px 0px;
   background-color: white;
   box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
 }
 
-.cardImg {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+.cardImgBox {
+  margin: 6px 6px 0 6px;
+}
+
+.posterImg {
+  width: 132px;
+  height: 198px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .cardBox a {
@@ -25,15 +33,31 @@
   color: #08224c;
 }
 
-/* .cardTitleBox {
-  display: inline-block;
-  background-color: blue;
-  height: calc(100%-231px);
-  width: 100%;
-} */
+.cardTitleBox {
+  padding: 6px;
+}
 
 .cardTitle {
   margin: 6px 0px;
   text-align: center;
   font-size: 1em;
+}
+
+.cardButtonsBox {
+  display: flex;
+  height: 0px;
+  width: 100%;
+}
+
+.cardButton1 {
+  width: 56px;
+  background-color: red;
+}
+.cardButton2 {
+  width: 32px;
+  background-color: yellow;
+}
+.cardButton3 {
+  width: 56px;
+  background-color: green;
 }
