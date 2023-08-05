@@ -2,15 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { setLog } from "../store/log";
 
 export const Access = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(),
+    dispatch = useDispatch();
 
   let [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
     [entrar, setEntrar] = useState(false),
-    [logOn, setLogOn] = useState(false),
-    [cerrar, setCerrar] = useState(false),
     [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
@@ -22,30 +23,14 @@ export const Access = () => {
           if (error) {
             setMensaje(data);
           } else {
-            setLogOn(true);
+            dispatch(setLog(true));
             setMensaje("Sesion iniciada con exito");
+            navigate("/");
           }
         });
     }
     setEntrar(false);
   }, [entrar]);
-
-  useEffect(() => {
-    if (cerrar) {
-      axios
-        .get("/api/user/leave")
-        .then((res) => res.data)
-        .then(({ error, data }) => {
-          if (error) {
-            setMensaje(data);
-          } else {
-            setLogOn(false);
-            navigate(data);
-          }
-        });
-    }
-    setCerrar(false);
-  }, [cerrar]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -60,11 +45,6 @@ export const Access = () => {
   const passwordHandler = (e) => {
     e.preventDefault();
     setPassword(e.target.value);
-  };
-
-  const logOutHandler = (e) => {
-    e.preventDefault();
-    setCerrar(true);
   };
 
   return (
@@ -99,14 +79,6 @@ export const Access = () => {
           disabled={!email || !password}
         >
           Iniciar sesion
-        </button>
-        <button
-          type="button"
-          name="Cerrar sesion"
-          disabled={!logOn}
-          onClick={logOutHandler}
-        >
-          Cerrar sesion
         </button>
       </form>
 

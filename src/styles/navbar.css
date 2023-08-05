@@ -8,6 +8,12 @@
   color: white;
 }
 
+#navbar h1 {
+  margin: 10px 0px;
+  color: white;
+  font-size: 1.2em;
+}
+
 #logo {
   display: inline-block;
   width: 72px;
@@ -18,17 +24,6 @@
   display: inline-block;
   align-items: center;
   width: calc(100% - 200px);
-}
-
-#navbar h1 {
-  margin: 0 0;
-  font-size: 1.2em;
-}
-
-#logInOut {
-  display: inline-block;
-  width: 64px;
-  margin-right: 32px;
 }
 
 #searchBox {
@@ -48,33 +43,17 @@
   margin-top: 2px;
 }
 
-/*
-
-#logo {
-  margin-left: 32px;
-}
-
-#searchForm {
-  background-color: green;
-  display: flex;
-  align-items: center;
-  width: 50%;
-}
-
-#searchBox {
-  width: 100%;
-}
-
-#searchBox input {
-  display: flex;
-  width: 80%;
-  margin: auto;
-}
-
-#navbar h3 {
-  margin: 0 0;
-}
-
 #logInOut {
+  display: inline-block;
+  width: 64px;
   margin-right: 32px;
-} */
+}
+
+#logInOut .button {
+  margin: 13px 0px;
+  border-top: 0px;
+  border-left: 0px;
+  border-bottom: 0px;
+  border-right: 0px;
+  color: white;
+}
