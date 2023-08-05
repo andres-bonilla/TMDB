@@ -6,13 +6,13 @@ const resError = (res, { status, message }) =>
 
 exports.anyByWords = (req, res) => {
   search
-    .anyByWords(req.query["by_words"])
+    .anyByWords(req.query["by_words"], req.query["page"])
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };
 
 exports.movieOrTvByWords = (req, res) => {
   search
-    .anyByWords(req.query["by_words"])
+    .anyByWords(req.query["by_words"], req.query["page"])
     .then(({ err, data }) =>
       err ? resError(res, data) : res.send(movieTvFilter(data))
     );
@@ -20,18 +20,18 @@ exports.movieOrTvByWords = (req, res) => {
 
 exports.movieByWords = (req, res) => {
   search
-    .movieByWords(req.query["by_words"])
+    .movieByWords(req.query["by_words"], req.query["page"])
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };
 
 exports.tvByWords = (req, res) => {
   search
-    .tvByWords(req.query["by_words"])
+    .tvByWords(req.query["by_words"], req.query["page"])
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };
 
 exports.personByWords = (req, res) => {
   search
-    .personByWords(req.query["by_words"])
+    .personByWords(req.query["by_words"], req.query["page"])
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };

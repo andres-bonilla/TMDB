@@ -1,9 +1,9 @@
 const axios = require("axios"),
   { urlSearchMaker } = require("./utils/utils");
 
-exports.anyByWords = (words) => {
+exports.anyByWords = (words, page) => {
   return axios
-    .get(urlSearchMaker("multi", words))
+    .get(urlSearchMaker("multi", words, page))
     .then((res) => res.data)
     .then((data) => {
       return { error: false, data: data.results };
@@ -14,9 +14,9 @@ exports.anyByWords = (words) => {
     });
 };
 
-exports.movieByWords = (words) => {
+exports.movieByWords = (words, page) => {
   return axios
-    .get(urlSearchMaker("movie", words))
+    .get(urlSearchMaker("movie", words, page))
     .then((res) => res.data)
     .then((data) => {
       return { error: false, data: data.results };
@@ -27,9 +27,9 @@ exports.movieByWords = (words) => {
     });
 };
 
-exports.tvByWords = (words) => {
+exports.tvByWords = (words, page) => {
   return axios
-    .get(urlSearchMaker("tv", words))
+    .get(urlSearchMaker("tv", words, page))
     .then((res) => res.data)
     .then((data) => {
       return { error: false, data: data.results };
@@ -40,9 +40,9 @@ exports.tvByWords = (words) => {
     });
 };
 
-exports.personByWords = (words) => {
+exports.personByWords = (words, page) => {
   return axios
-    .get(urlSearchMaker("person", words))
+    .get(urlSearchMaker("person", words, page))
     .then((res) => res.data)
     .then((data) => {
       return { error: false, data: data.results };

@@ -36,25 +36,9 @@ export const Results = () => {
     const columnCount = gridStyle
       .getPropertyValue("grid-template-columns")
       .split(" ").length;
-    dispatch(setMaxElementsGrid(columnCount * 6));
+    dispatch(setMaxElementsGrid(columnCount * 10));
   }, [columnsNumber]);
 
-  // const [numColumns, setNumColumns] = useState("1");
-  // useEffect(() => {
-  //   const element = document.getElementById("resultsGrid");
-  //   const gridComputedStyle = document.defaultView.getComputedStyle(element);
-
-  //   // get number of grid rows
-  //   const gridRowCount = gridComputedStyle
-  //     .getPropertyValue("grid-template-rows")
-  //     .split(" ").length;
-  //   // get number of grid columns
-  //   const gridColumnCount = gridComputedStyle
-  //     .getPropertyValue("grid-template-columns")
-  //     .split(" ").length;
-  //   setNumColumns(gridColumnCount);
-  //   console.log(gridRowCount, gridColumnCount);
-  // }, [busqueda]);
   if (search.status === "pending") return <p>Loading...</p>;
 
   if (search.status === "rejected") return <h1>Too FAST</h1>;
@@ -63,7 +47,7 @@ export const Results = () => {
     <div id="resultsBox">
       <CheckTabs />
       <div id="resultsGrid">
-        {search.actualPage.map((resultado) => {
+        {search.pageData.map((resultado) => {
           return <Card data={resultado} key={resultado.id} />;
         })}
       </div>

@@ -1,58 +1,10 @@
-// import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import axios from "axios";
-
-// const initialState = {
-//   data: [],
-//   status: "idle",
-// };
-
-// export const getResult = createAsyncThunk("search/get", async (params) => {
-//   const { mediaType, words, oldSearch } = params;
-//   const { data } = await axios.get(
-//     `/api/search/${mediaType}?by_words=${words}`,
-//     {
-//       signal: oldSearch ? oldSearch.signal : null,
-//     }
-//   );
-//   return data;
-// });
-
-// export const searchSlice = createSlice({
-//   name: "search",
-//   initialState,
-//   reducers: {
-//     loadResult(state, action) {
-//       return state;
-//     },
-//   },
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(getResult.pending, (state, action) => {
-//         state.status = "loading";
-//       })
-//       .addCase(getResult.fulfilled, (state, action) => {
-//         state.data = action.payload;
-//         state.status = "idle";
-//       })
-//       .addCase(getResult.rejected, (state, action) => {
-//         state.status = "error";
-//       });
-//   },
-// });
-
-// export const { loadResult } = searchSlice.actions;
-
-// export default searchSlice.reducer;
-
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  actualPage: [],
-  spareData: [],
+  pageData: [],
+  page: 1,
   maxElementsGrid: 20,
-  lastReqPageTMDB: 1,
-  lastPageTMDB: 0,
   status: "idle",
 };
 
@@ -70,7 +22,8 @@ export const searchSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getResult.fulfilled, (state, action) => {
-        state.actualPage = action.payload;
+        state.pageData = action.payload.data;
+        state.page = action.payload.page;
         state.status = "idle";
       })
       .addCase(getResult.rejected, (state, action) => {
@@ -79,16 +32,44 @@ export const searchSlice = createSlice({
   },
 });
 
-export const getResult = createAsyncThunk("search/get", async (params) => {
-  const { mediaType, words, oldSearch } = params;
-  const { data } = await axios.get(
-    `/api/search/${mediaType}?by_words=${words}`,
-    {
-      signal: oldSearch ? oldSearch.signal : null,
+const searchIndex = (reqPage, maxElements) => {
+  const initial = (maxElements * (reqPage - 1)) % 20;
+  let initialPage = Math.ceil((maxElements * (reqPage - 1)) / 20);
+  initialPage = initialPage === 0 ? 1 : initialPage;
+  const numOfPages = Math.ceil((maxElements / 20) * reqPage - initialPage);
+
+  return { initial, initialPage, numOfPages };
+};
+
+export const getResult = createAsyncThunk(
+  "search/get",
+  async (params, { getState }) => {
+    const state = getState(),
+      { mediaType, words, oldSearch, page } = params,
+      { initial, initialPage, numOfPages } = searchIndex(
+        page,
+        state.search.maxElementsGrid
+      );
+
+    let result = [],
+      data = {};
+
+    for (let i = 0; i < numOfPages + 1; i++) {
+      data = await axios.get(
+        `/api/search/${mediaType}?by_words=${words}&page=${initialPage + i}`,
+        {
+          signal: oldSearch ? oldSearch.signal : null,
+        }
+      );
+      result = result.concat(data.data);
     }
-  );
-  return data;
-});
+
+    return {
+      page,
+      data: result.slice(initial, state.search.maxElementsGrid + initial),
+    };
+  }
+);
 
 export const { setMaxElementsGrid } = searchSlice.actions;
 
