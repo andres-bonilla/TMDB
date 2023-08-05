@@ -1,19 +1,23 @@
 import { Link } from "react-router-dom";
+import "../styles/navbar.css";
+import { Search } from "./Search";
 
 export const Navbar = () => {
   return (
-    <div>
-      <Link to="/">
-        <h1>¡Movie BASE!</h1>
-      </Link>
+    <div id="navbar">
+      <div id="logo">
+        <Link to="/">
+          <h1>Movie BASE</h1>
+        </Link>
+      </div>
 
-      <Link to="/search/any">
-        <h2>Buscar</h2>
-      </Link>
+      <Search />
 
-      <Link to="/access">
-        <h3>Access</h3>
-      </Link>
+      <div id="logInOut">
+        <Link to="/access">
+          <h3>Log In</h3>
+        </Link>
+      </div>
     </div>
   );
 };

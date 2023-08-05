@@ -1,0 +1,80 @@
+#navbar {
+  display: flex;
+  position: fixed;
+  width: 100%;
+  height: 64px;
+  top: 0;
+  background-color: rgb(35, 35, 62);
+  color: white;
+}
+
+#logo {
+  display: inline-block;
+  width: 72px;
+  margin-left: 32px;
+}
+
+#searchForm {
+  display: inline-block;
+  align-items: center;
+  width: calc(100% - 200px);
+}
+
+#navbar h1 {
+  margin: 0 0;
+  font-size: 1.2em;
+}
+
+#logInOut {
+  display: inline-block;
+  width: 64px;
+  margin-right: 32px;
+}
+
+#searchBox {
+  display: flex;
+  justify-content: center;
+}
+
+#searchBox input {
+  width: 80%;
+  margin: auto auto;
+  font-size: 1.2em;
+}
+
+#checkBox {
+  display: flex;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+/*
+
+#logo {
+  margin-left: 32px;
+}
+
+#searchForm {
+  background-color: green;
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+#searchBox {
+  width: 100%;
+}
+
+#searchBox input {
+  display: flex;
+  width: 80%;
+  margin: auto;
+}
+
+#navbar h3 {
+  margin: 0 0;
+}
+
+#logInOut {
+  margin-right: 32px;
+} */

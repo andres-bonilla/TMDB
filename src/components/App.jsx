@@ -5,11 +5,11 @@ import { Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setImg } from "../store/img";
 import { Mediafile } from "../components/Mediafile";
-import { Search } from "./Search";
 import { Footbar } from "./Footbar";
 import { Navbar } from "./Navbar";
 import { Access } from "./Access";
 import { Enroll } from "./Enroll";
+import { Results } from "./Results";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export const App = () => {
     <div>
       <Navbar />
 
-      <div>
+      <div id="content" style={{ paddingTop: "70px" }}>
         <Routes>
           <Route path="/" element={<></>} />
 
@@ -32,7 +32,7 @@ export const App = () => {
 
           <Route path="/enroll" element={<Enroll />} />
 
-          <Route path="/search/:type" element={<Search />} />
+          <Route path="/search/:type" element={<Results />} />
 
           <Route path="/:type/:id" element={<Mediafile />} />
 

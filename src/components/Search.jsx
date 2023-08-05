@@ -1,16 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { Card } from "../commons/Card";
+import { useDispatch } from "react-redux";
+import { setResult } from "../store/result";
 
 export const Search = () => {
   let [check, setCheck] = useState([false, false, false]),
     [searchWords, setSearchWords] = useState(""),
     [mediaType, setMediaType] = useState("any"),
-    [oldSearch, setOldSearch] = useState(null),
-    [results, setResults] = useState([]);
+    [oldSearch, setOldSearch] = useState(null);
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(),
+    dispatch = useDispatch();
 
   useEffect(() => {
     if (searchWords && searchWords[searchWords.length - 1] !== " ") {
@@ -23,7 +24,7 @@ export const Search = () => {
           signal: oldSearch ? oldSearch.signal : null,
         })
         .then(({ data }) => {
-          if (!data.error) setResults(data);
+          if (!data.error) dispatch(setResult(data));
           navigate(`/search/${mediaType}?by_words=${words}`);
         })
         .catch((err) => {
@@ -65,51 +66,49 @@ export const Search = () => {
   };
 
   return (
-    <>
-      <form>
-        <input
-          onChange={changeHandler}
-          value={searchWords}
-          type="text"
-          name="words"
-        />
-
-        <label>
+    <div id="searchForm">
+      <form style={{ margin: "7px 0px" }}>
+        <div id="searchBox">
           <input
-            onChange={() => checkHandler([true, true, false], 0)}
-            checked={check[0]}
-            type="checkbox"
-            name="movie"
+            onChange={changeHandler}
+            value={searchWords}
+            type="text"
+            name="words"
           />
-          Peliculas
-        </label>
+        </div>
 
-        <label>
-          <input
-            onChange={() => checkHandler([true, true, false], 1)}
-            checked={check[1]}
-            type="checkbox"
-            name="tv"
-          />
-          Tv
-        </label>
+        <div id="checkBox">
+          <label>
+            <input
+              onChange={() => checkHandler([true, true, false], 0)}
+              checked={check[0]}
+              type="checkbox"
+              name="movie"
+            />
+            Pelicula
+          </label>
 
-        <label>
-          <input
-            onChange={() => checkHandler([false, false, true], 2)}
-            checked={check[2]}
-            type="checkbox"
-            name="person"
-          />
-          Persona
-        </label>
+          <label>
+            <input
+              onChange={() => checkHandler([true, true, false], 1)}
+              checked={check[1]}
+              type="checkbox"
+              name="tv"
+            />
+            Tv
+          </label>
+
+          <label>
+            <input
+              onChange={() => checkHandler([false, false, true], 2)}
+              checked={check[2]}
+              type="checkbox"
+              name="person"
+            />
+            Persona
+          </label>
+        </div>
       </form>
-
-      <div>
-        {results.map((result) => {
-          return <Card data={result} key={result.id} />;
-        })}
-      </div>
-    </>
+    </div>
   );
 };
