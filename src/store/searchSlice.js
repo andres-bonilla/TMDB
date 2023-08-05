@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
 
 const initialState = {
   words: "",
@@ -15,12 +14,6 @@ export const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    setSearch(state, action) {
-      const { words, type, page } = action.payload;
-      state.words = words || state.words;
-      state.mediaType = type || state.mediaType;
-      state.page = page || state.page;
-    },
     setSearchWords(state, action) {
       state.words = action.payload;
       state.page = 1;
@@ -52,7 +45,11 @@ export const searchSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getResult.fulfilled, (state, action) => {
-        state.pageData = action.payload;
+        const { words, type, page } = action.payload.search;
+        state.words = words || state.words;
+        state.mediaType = type || state.mediaType;
+        state.page = +page || state.page;
+        state.pageData = action.payload.data;
         state.status = "idle";
       })
       .addCase(getResult.rejected, (state, action) => {
@@ -63,13 +60,15 @@ export const searchSlice = createSlice({
 
 export const getResult = createAsyncThunk(
   "search/get",
-  async ({ oldSearch, words, type, page }, { getState, dispatch }) => {
-    await dispatch(setSearch({ words, type, page }));
+  async ({ oldSearch, words, type, page }, { getState }) => {
+    const { maxElementsGrid } = getState().search;
 
-    const { search } = getState(),
-      apiSearch = `/api/search/${search.mediaType}?by_words=${search.words}`;
+    const apiSearch = `/api/search/${type}?by_words=${words}`;
 
-    const { initial, initialPage, numOfPages } = searchIndex(search);
+    const { initial, initialPage, numOfPages } = searchIndex(
+      +page,
+      maxElementsGrid
+    );
 
     let result = [],
       data = {};
@@ -81,11 +80,18 @@ export const getResult = createAsyncThunk(
       result = result.concat(data.data);
     }
 
-    return result.slice(initial, search.maxElementsGrid + initial);
+    return {
+      data: result.slice(initial, maxElementsGrid + initial),
+      search: {
+        words: words,
+        type: type,
+        page: +page,
+      },
+    };
   }
 );
 
-const searchIndex = ({ page: reqPage, maxElementsGrid: maxElements }) => {
+const searchIndex = (reqPage, maxElements) => {
   let initialPage = Math.ceil((maxElements * (reqPage - 1)) / 20);
   initialPage = initialPage === 0 ? 1 : initialPage;
 
@@ -96,7 +102,6 @@ const searchIndex = ({ page: reqPage, maxElementsGrid: maxElements }) => {
 };
 
 export const {
-  setSearch,
   setSearchWords,
   setMediaType,
   setMaxElementsGrid,

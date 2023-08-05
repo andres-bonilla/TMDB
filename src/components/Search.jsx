@@ -1,32 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getResult, setSearchWords } from "../store/searchSlice";
+import { setSearchWords } from "../store/searchSlice";
 
 export const Search = () => {
-  const navigate = useNavigate(),
-    dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // let { type, words, page } = useParams();
-
-  // const [oldSearch, setOldSearch] = useState(null);
   const search = useSelector((state) => state.search);
-
-  useEffect(() => {
-    if (search.words && search.words[search.words.length - 1] !== " ") {
-      navigate(`/search/${search.mediaType}/${search.words}/on/${search.page}`);
-    }
-  }, [search.words, search.mediaType, search.page, search.maxElementsGrid]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // useEffect(() => {
-  //   console.log(page);
-  //   setOldSearch(new AbortController());
-  //   dispatch(getResult({ oldSearch }));
-
-  //   return () => {
-  //     if (words.length > 1 && oldSearch) oldSearch.abort();
-  //   };
-  // }, [words, type, page, search.maxElementsGrid]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const writeHandler = (e) => {
     e.preventDefault();

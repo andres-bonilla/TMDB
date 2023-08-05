@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router";
+import { Routes, Route, useLocation, useNavigate } from "react-router";
 import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setImg } from "../store/img";
@@ -13,9 +13,11 @@ import { Results } from "./Results";
 import { resetSearch } from "../store/searchSlice";
 
 export const App = () => {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const searchWord = useSelector((state) => state.search.words);
+  const dispatch = useDispatch(),
+    navigate = useNavigate(),
+    location = useLocation();
+
+  const search = useSelector((state) => state.search);
 
   useEffect(() => {
     axios.get("/api/data/img_data").then(({ data }) => {
@@ -24,8 +26,13 @@ export const App = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    if (search.words !== "")
+      navigate(`/search/${search.mediaType}/${search.words}/on/${search.page}`);
+  }, [search.words, search.mediaType, search.page, search.maxElementsGrid]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     let isNotSearch =
-      !(searchWord === "") &&
+      !(search.words === "") &&
       (location.pathname === "/" || !(location.pathname[1] === "s"));
 
     if (isNotSearch) dispatch(resetSearch());

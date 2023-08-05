@@ -1,21 +1,19 @@
 import "../styles/results.css";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getResult, setMaxElementsGrid } from "../store/searchSlice";
+import { getResult, setMaxElementsGrid, setSearch } from "../store/searchSlice";
 import { PageSelector } from "./PageSelector";
 import { Card } from "../commons/Card";
 import { CheckTabs } from "./CheckTabs";
 import { useParams } from "react-router";
 
 export const Results = () => {
+  const { type, words, page } = useParams();
+
   const dispatch = useDispatch();
-
-  const [columnsNumber, setColumnsNumber] = useState(0);
-
   const search = useSelector((state) => state.search);
 
-  let { type, words, page } = useParams();
-
+  const [columnsNumber, setColumnsNumber] = useState(0);
   const [oldSearch, setOldSearch] = useState(null);
 
   useEffect(() => {
@@ -46,6 +44,7 @@ export const Results = () => {
 
   useEffect(() => {
     setOldSearch(new AbortController());
+
     dispatch(getResult({ oldSearch, words, type, page }));
 
     return () => {

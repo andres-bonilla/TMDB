@@ -1,12 +1,28 @@
 import "../styles/checkTabs.css";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { setMediaType } from "../store/searchSlice";
 
 export const CheckTabs = () => {
   const dispatch = useDispatch();
 
+  const mediaType = useSelector((state) => state.search.mediaType);
+
   const [check, setCheck] = useState([false, false, false]);
+
+  useEffect(() => {
+    if (mediaType === "movie") {
+      setCheck([true, false, false]);
+    } else if (mediaType === "tv") {
+      setCheck([false, true, false]);
+    } else if (mediaType === "movie_or_tv") {
+      setCheck([true, true, false]);
+    } else if (mediaType === "person") {
+      setCheck([false, false, true]);
+    } else {
+      setCheck([false, false, false]);
+    }
+  }, [mediaType]);
 
   const checkHandler = (esFalso, negado) => {
     let auxCheck = check;
