@@ -1,0 +1,65 @@
+#resultsTabs {
+  display: flex;
+  /* background-color: chocolate; */
+  height: 30px;
+  width: 100%;
+  margin-bottom: 24px;
+  padding: 0px 16px;
+  justify-content: space-around;
+}
+
+.tab {
+  display: flex;
+  width: 120px;
+  margin: 0px 5px;
+}
+
+.tab label {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.tab label span {
+  width: 100%;
+  height: min-content;
+  padding: 4px 0px;
+  text-align: center;
+  border-radius: 6px;
+  background-color: rgb(10, 44, 102);
+  color: #fff;
+}
+
+.tab label input {
+  position: absolute;
+  margin: 0px;
+  display: none;
+}
+
+#tab0 input:checked + span {
+  background-color: #8d1bf7;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  border: 2px solid #000e29;
+}
+
+#tab1 input:checked + span {
+  background-color: #f71b1b;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  border: 1px solid #000e29;
+}
+
+#tab2 input:checked + span {
+  background-color: #1bf759;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  border: 1px solid #000e29;
+}
+
+#tab3 input:checked + span {
+  background-color: #f7cb1b;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  border: 1px solid #000e29;
+}

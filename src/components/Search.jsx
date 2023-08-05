@@ -1,17 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setResult } from "../store/result";
 
 export const Search = () => {
-  let [check, setCheck] = useState([false, false, false]),
-    [searchWords, setSearchWords] = useState(""),
-    [mediaType, setMediaType] = useState("any"),
+  let [searchWords, setSearchWords] = useState(""),
     [oldSearch, setOldSearch] = useState(null);
 
   const navigate = useNavigate(),
     dispatch = useDispatch();
+
+  const mediaType = useSelector((state) => state.mType);
 
   useEffect(() => {
     if (searchWords && searchWords[searchWords.length - 1] !== " ") {
@@ -37,29 +37,6 @@ export const Search = () => {
     }
   }, [searchWords, mediaType]);
 
-  const checkHandler = (esFalso, negado) => {
-    check = [
-      esFalso[0] && check[0],
-      esFalso[1] && check[1],
-      esFalso[2] && check[2],
-    ];
-    check[negado] = !check[negado];
-
-    setMediaType(
-      check[0] && check[1]
-        ? "movie_or_tv"
-        : check[0]
-        ? "movie"
-        : check[1]
-        ? "tv"
-        : check[2]
-        ? "person"
-        : "any"
-    );
-
-    setCheck(check);
-  };
-
   const changeHandler = (e) => {
     e.preventDefault();
     setSearchWords(e.target.value);
@@ -75,38 +52,6 @@ export const Search = () => {
             type="text"
             name="words"
           />
-        </div>
-
-        <div id="checkBox">
-          <label>
-            <input
-              onChange={() => checkHandler([true, true, false], 0)}
-              checked={check[0]}
-              type="checkbox"
-              name="movie"
-            />
-            Pelicula
-          </label>
-
-          <label>
-            <input
-              onChange={() => checkHandler([true, true, false], 1)}
-              checked={check[1]}
-              type="checkbox"
-              name="tv"
-            />
-            Tv
-          </label>
-
-          <label>
-            <input
-              onChange={() => checkHandler([false, false, true], 2)}
-              checked={check[2]}
-              type="checkbox"
-              name="person"
-            />
-            Persona
-          </label>
         </div>
       </form>
     </div>

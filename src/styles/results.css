@@ -1,7 +1,11 @@
 #resultsBox {
+  width: 100%;
+  margin: 12px 24px 24px 24px;
+}
+
+#resultsGrid {
   display: grid;
   width: 100%;
-  margin: 24px 24px;
   gap: 16px 12px;
   grid-template-columns: repeat(auto-fill, 144px);
   justify-content: center;
