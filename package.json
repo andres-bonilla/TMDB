@@ -29,8 +29,8 @@
   "scripts": {
     "start": "concurrently 'npm run server' 'npm run client'",
     "server": "nodemon api/server.js",
-    "client": "react-scripts start",
-    "build": "react-scripts build"
+    "client": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build"
   },
   "proxy": "http://localhost:3001/",
   "eslintConfig": {

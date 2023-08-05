@@ -1,8 +1,8 @@
-const express = require( "express" ),
-      tv = require( "../controllers/tv" )
+const express = require("express"),
+  tv = require("../controllers/tv");
 
-const tvRouter = express.Router()
+const tvRouter = express.Router();
 
-tvRouter.get( "/:id", tv.getById )
+tvRouter.get("/:id", tv.getById);
 
-module.exports = tvRouter
+module.exports = tvRouter;
