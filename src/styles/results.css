@@ -1,11 +1,13 @@
 #resultsBox {
   width: 100%;
-  margin: 12px 24px 24px 24px;
+  margin: 12px 24px 32px 24px;
 }
 
 #resultsGrid {
   display: grid;
-  width: 100%;
+  max-width: 90%;
+  min-width: 312px;
+  margin: 0 auto;
   gap: 16px 12px;
   grid-template-columns: repeat(auto-fill, 144px);
   justify-content: center;

@@ -1,7 +1,17 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-export const setMType = createAction("MTYPE");
+const initialState = "any";
 
-export const mediaType = createReducer("any", {
-  [setMType]: (state, action) => action.payload,
+export const mTypeSlice = createSlice({
+  name: "mType",
+  initialState,
+  reducers: {
+    setMType(state, action) {
+      return action.payload;
+    },
+  },
 });
+
+export const { setMType } = mTypeSlice.actions;
+
+export default mTypeSlice.reducer;

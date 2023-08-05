@@ -1,18 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
-import { setLog } from "../store/log";
 import { Search } from "./Search";
+import { useSelector, useDispatch } from "react-redux";
+import { isLoged } from "../store/userSlice";
 import "../styles/navbar.css";
 
 export const Navbar = () => {
   const navigate = useNavigate(),
     dispatch = useDispatch();
 
-  const isLog = useSelector((state) => state.log);
+  const loged = useSelector((state) => state.user);
 
   const logOut = (e) => {
     e.preventDefault();
@@ -23,7 +22,7 @@ export const Navbar = () => {
         if (error) {
           console.log(data);
         } else {
-          dispatch(setLog(false));
+          dispatch(isLoged(false));
           navigate(data);
         }
       });
@@ -45,7 +44,7 @@ export const Navbar = () => {
       <Search />
 
       <div id="logButton">
-        {isLog ? (
+        {loged ? (
           <button
             className="buttons"
             style={{ backgroundColor: "red" }}

@@ -6,7 +6,7 @@ import { CheckTabs } from "./CheckTabs";
 import { Link } from "react-router-dom";
 
 export const Results = () => {
-  const busqueda = useSelector((state) => state.result);
+  const search = useSelector((state) => state.search);
 
   // const [numColumns, setNumColumns] = useState("1");
   // useEffect(() => {
@@ -24,12 +24,15 @@ export const Results = () => {
   //   setNumColumns(gridColumnCount);
   //   console.log(gridRowCount, gridColumnCount);
   // }, [busqueda]);
+  if (search.status === "pending") return <p>Loading...</p>;
+
+  if (search.status === "rejected") return <h1>Too FAST</h1>;
 
   return (
     <div id="resultsBox">
       <CheckTabs />
       <div id="resultsGrid">
-        {busqueda.map((resultado) => {
+        {search.data.map((resultado) => {
           return <Card data={resultado} key={resultado.id} />;
         })}
       </div>

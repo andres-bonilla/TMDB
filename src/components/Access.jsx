@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLog } from "../store/log";
+import { isLoged } from "../store/userSlice";
 import "../styles/accessEnroll.css";
 
 export const Access = () => {
@@ -23,7 +23,7 @@ export const Access = () => {
         if (error) {
           setMensaje(data);
         } else {
-          dispatch(setLog(true));
+          dispatch(isLoged(true));
           setMensaje("");
           navigate("/");
         }

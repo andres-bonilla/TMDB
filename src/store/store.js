@@ -1,17 +1,20 @@
 // STORE CREATION
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
-import { urlImg } from "./img";
-import { result } from "./result";
-import { logInOut } from "./log";
-import { mediaType } from "./mType";
+import imgReducer from "./img";
+import mTypeReducer from "./mType";
+import searchReducer from "./searchSlice";
+import userReducer from "./userSlice";
+
+const middleware = (getDefaultMiddleware) =>
+  getDefaultMiddleware().concat(logger);
 
 export const store = configureStore({
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware,
   reducer: {
-    img: urlImg,
-    result: result,
-    log: logInOut,
-    mType: mediaType,
+    user: userReducer,
+    search: searchReducer,
+    mType: mTypeReducer,
+    img: imgReducer,
   },
 });

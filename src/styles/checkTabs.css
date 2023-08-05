@@ -1,11 +1,11 @@
 #resultsTabs {
   display: flex;
-  /* background-color: chocolate; */
+  width: 75%;
+  min-width: 312px;
   height: 30px;
-  width: 100%;
+  margin: 0 auto;
   margin-bottom: 24px;
-  padding: 0px 16px;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .tab {

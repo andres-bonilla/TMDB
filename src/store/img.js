@@ -1,7 +1,17 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-export const setImg = createAction("URLIMG");
+const initialState = "";
 
-export const urlImg = createReducer([], {
-  [setImg]: (state, action) => action.payload,
+export const imgSlice = createSlice({
+  name: "img",
+  initialState,
+  reducers: {
+    setImg(state, action) {
+      return action.payload;
+    },
+  },
 });
+
+export const { setImg } = imgSlice.actions;
+
+export default imgSlice.reducer;
