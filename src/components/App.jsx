@@ -28,14 +28,14 @@ export const App = () => {
   useEffect(() => {
     if (search.words !== "")
       navigate(`/search/${search.mediaType}/${search.words}/on/${search.page}`);
-  }, [search.words, search.mediaType, search.page, search.maxElementsGrid]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [search.maxElementsGrid]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    let isNotSearch =
+    let isNotSearching =
       !(search.words === "") &&
       (location.pathname === "/" || !(location.pathname[1] === "s"));
 
-    if (isNotSearch) dispatch(resetSearch());
+    if (isNotSearching) dispatch(resetSearch());
   }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -50,11 +50,11 @@ export const App = () => {
 
           <Route path="/enroll" element={<Enroll />} />
 
-          <Route path="/search" element={<Results />} />
+          <Route path="/search/:type/:words/on/:page" element={<Results />} />
 
           <Route path="/search/:type/:words" element={<Results />} />
 
-          <Route path="/search/:type/:words/on/:page" element={<Results />} />
+          <Route path="/search/*" element={<Results />} />
 
           <Route path="/:type/:id" element={<Mediafile />} />
 

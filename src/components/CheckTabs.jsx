@@ -1,12 +1,12 @@
 import "../styles/checkTabs.css";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setMediaType } from "../store/searchSlice";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 export const CheckTabs = () => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const mediaType = useSelector((state) => state.search.mediaType);
+  const { mediaType, words, page } = useSelector((state) => state.search);
 
   const [check, setCheck] = useState([false, false, false]);
 
@@ -36,20 +36,18 @@ export const CheckTabs = () => {
       ];
       auxCheck[negado] = !auxCheck[negado];
     }
-    dispatch(
-      setMediaType(
-        auxCheck[0] && auxCheck[1]
-          ? "movie_or_tv"
-          : auxCheck[0]
-          ? "movie"
-          : auxCheck[1]
-          ? "tv"
-          : auxCheck[2]
-          ? "person"
-          : "any"
-      )
-    );
     setCheck(auxCheck);
+    const media =
+      auxCheck[0] && auxCheck[1]
+        ? "movie_or_tv"
+        : auxCheck[0]
+        ? "movie"
+        : auxCheck[1]
+        ? "tv"
+        : auxCheck[2]
+        ? "person"
+        : "any";
+    navigate(`/search/${media}/${words}/on/${page}`);
   };
   return (
     <div id="resultsTabs">

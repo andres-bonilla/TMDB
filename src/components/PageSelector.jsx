@@ -1,12 +1,12 @@
 import "../styles/results.css";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { nextPage, prevPage } from "../store/searchSlice";
+import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 export const PageSelector = () => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { page, maxElementsGrid, pageData } = useSelector(
+  const { page, maxElementsGrid, pageData, mediaType, words } = useSelector(
     (state) => state.search
   );
 
@@ -17,7 +17,7 @@ export const PageSelector = () => {
         type="button"
         name="Prev"
         disabled={page === 1}
-        onClick={() => dispatch(prevPage())}
+        onClick={() => navigate(`/search/${mediaType}/${words}/on/${page - 1}`)}
       >
         Anterior
       </button>
@@ -32,7 +32,7 @@ export const PageSelector = () => {
         type="button"
         name="Next"
         disabled={pageData.length < maxElementsGrid}
-        onClick={() => dispatch(nextPage())}
+        onClick={() => navigate(`/search/${mediaType}/${words}/on/${page + 1}`)}
       >
         Siguiente
       </button>

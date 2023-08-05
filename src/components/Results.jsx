@@ -1,7 +1,7 @@
 import "../styles/results.css";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getResult, setMaxElementsGrid, setSearch } from "../store/searchSlice";
+import { getResult, setMaxElementsGrid } from "../store/searchSlice";
 import { PageSelector } from "./PageSelector";
 import { Card } from "../commons/Card";
 import { CheckTabs } from "./CheckTabs";

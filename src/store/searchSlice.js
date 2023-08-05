@@ -48,7 +48,7 @@ export const searchSlice = createSlice({
         const { words, type, page } = action.payload.search;
         state.words = words || state.words;
         state.mediaType = type || state.mediaType;
-        state.page = +page || state.page;
+        state.page = page;
         state.pageData = action.payload.data;
         state.status = "idle";
       })
@@ -66,7 +66,7 @@ export const getResult = createAsyncThunk(
     const apiSearch = `/api/search/${type}?by_words=${words}`;
 
     const { initial, initialPage, numOfPages } = searchIndex(
-      +page,
+      page ? +page : 1,
       maxElementsGrid
     );
 
@@ -85,7 +85,7 @@ export const getResult = createAsyncThunk(
       search: {
         words: words,
         type: type,
-        page: +page,
+        page: page ? +page : 1,
       },
     };
   }
