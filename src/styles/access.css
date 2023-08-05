@@ -2,23 +2,22 @@
   display: inline-block;
   padding: 32px;
   margin: 32px;
-  background-color: red;
+  background-color: white;
+  border-radius: 3%;
 }
 
 #logBox h2 {
   margin-top: 0px;
-}
-
-#enrollText {
-  display: inline;
-  margin-right: 4px;
+  font-size: 1.2em;
+  /*text-align: center; */
 }
 
 #logBox label {
   display: block;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  background-color: beige;
+  margin-bottom: 4px;
+  margin-top: 16px;
+  /* text-align: center; */
+  font-size: 0.7em;
 }
 
 .logInBox {
@@ -26,9 +25,37 @@
 }
 
 .logInBox input {
+  outline: none;
   width: 100%;
+  font-size: 1em;
+  padding: 4px;
+  border-color: #696473;
+}
+
+.logInBox input:focus {
+  width: 100%;
+  font-size: 1em;
+  padding: 4px;
+  border-color: rgb(31, 23, 42);
 }
 
 #logInButton {
-  background-color: green;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 0px;
+  padding: 4px 0px;
+  font-size: 1em;
+  background-color: rgb(0, 68, 128);
+}
+
+#enrollBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.enrollText {
+  display: inline;
+  font-size: 0.7em;
+  margin-right: 3px;
 }

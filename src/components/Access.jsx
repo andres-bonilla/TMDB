@@ -52,9 +52,6 @@ export const Access = () => {
     <div id="logBox">
       <h2>Iniciar sesión</h2>
 
-      <p id="enrollText">¿No tienes cuenta?</p>
-      <Link to="/enroll">Créala</Link>
-
       <form onSubmit={submitHandler}>
         <p style={{ color: "red" }}>{mensaje}</p>
         <label for="email">Correo electronico</label>
@@ -89,6 +86,12 @@ export const Access = () => {
           Iniciar sesion
         </button>
       </form>
+      <div id="enrollBox">
+        <p className="enrollText">¿No tienes cuenta?</p>
+        <Link to="/enroll" className="enrollText">
+          Créala
+        </Link>
+      </div>
     </div>
   );
 };
