@@ -50,7 +50,7 @@ export const Access = () => {
 
   return (
     <div id="logBox">
-      <h2>Iniciar sesión</h2>
+      <h2>¡Bienvenido!</h2>
 
       <form onSubmit={submitHandler}>
         <p style={{ color: "red" }}>{mensaje}</p>
