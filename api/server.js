@@ -18,7 +18,9 @@ app.use(morgan("tiny"));
 app.use(cookieParser());
 app.use(
   session({
-    secret: "prueba" /*, resave: true, saveUninitialized: true*/,
+    secret: "prueba",
+    resave: true,
+    saveUninitialized: true,
   })
 );
 app.use(passport.initialize());
