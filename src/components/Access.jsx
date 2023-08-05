@@ -1,10 +1,10 @@
+import "../styles/accessEnroll.css";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { isLoged } from "../store/userSlice";
-import "../styles/accessEnroll.css";
 
 export const Access = () => {
   let [email, setEmail] = useState(""),

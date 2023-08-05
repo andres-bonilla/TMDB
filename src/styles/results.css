@@ -13,11 +13,6 @@
   justify-content: center;
 }
 
-/* .card:last-child {
-  background-color: pink;
-  grid-column: 1 / -1;
-} */
-
 .linkCardBox {
   display: flex;
   height: 100%;
@@ -89,4 +84,21 @@
 .cardButton3 {
   width: 53px;
   background-color: green;
+}
+
+#pageSelector {
+  display: flex;
+  margin: 32px 24px;
+  justify-content: center;
+}
+
+.pageButton {
+  width: 300px;
+  padding: 6px;
+  margin: 0px 8px;
+  border-radius: 4px;
+  background-color: #08224c;
+  font-weight: 600;
+  font-size: 1em;
+  color: white;
 }

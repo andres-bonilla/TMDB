@@ -1,11 +1,11 @@
+import "../styles/navbar.css";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import { useNavigate } from "react-router";
-import { Search } from "./Search";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { isLoged } from "../store/userSlice";
-import "../styles/navbar.css";
+import { Search } from "./Search";
 
 export const Navbar = () => {
   const navigate = useNavigate(),

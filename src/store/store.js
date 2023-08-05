@@ -2,7 +2,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import imgReducer from "./img";
-import mTypeReducer from "./mType";
 import searchReducer from "./searchSlice";
 import userReducer from "./userSlice";
 
@@ -14,7 +13,6 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     search: searchReducer,
-    mType: mTypeReducer,
     img: imgReducer,
   },
 });

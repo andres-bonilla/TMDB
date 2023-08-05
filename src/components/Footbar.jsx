@@ -1,5 +1,5 @@
-import tmdbLogo from "../essets/tmdb_logo.svg";
 import "../styles/footbar.css";
+import tmdbLogo from "../essets/tmdb_logo.svg";
 
 export const Footbar = () => {
   return (

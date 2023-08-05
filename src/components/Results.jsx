@@ -1,10 +1,10 @@
 import "../styles/results.css";
 import React, { useEffect, useState } from "react";
-import { Card } from "../commons/Card";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckTabs } from "./CheckTabs";
-import { Link } from "react-router-dom";
 import { setMaxElementsGrid } from "../store/searchSlice";
+import { PageSelector } from "./PageSelector";
+import { Card } from "../commons/Card";
+import { CheckTabs } from "./CheckTabs";
 
 export const Results = () => {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export const Results = () => {
     const columnCount = gridStyle
       .getPropertyValue("grid-template-columns")
       .split(" ").length;
-    dispatch(setMaxElementsGrid(columnCount * 10));
+    dispatch(setMaxElementsGrid(columnCount * 6));
   }, [columnsNumber]);
 
   if (search.status === "pending") return <p>Loading...</p>;
@@ -51,6 +51,7 @@ export const Results = () => {
           return <Card data={resultado} key={resultado.id} />;
         })}
       </div>
+      <PageSelector />
     </div>
   );
 };

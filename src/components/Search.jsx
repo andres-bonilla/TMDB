@@ -1,47 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getResult } from "../store/searchSlice";
+import { getResult, setSearchWords } from "../store/searchSlice";
 
 export const Search = () => {
-  let [searchWords, setSearchWords] = useState(""),
-    [oldSearch, setOldSearch] = useState(null);
-
   const navigate = useNavigate(),
     dispatch = useDispatch();
 
-  const mediaType = useSelector((state) => state.mType);
+  const [oldSearch, setOldSearch] = useState(null);
+  const search = useSelector((state) => state.search);
 
   useEffect(() => {
-    if (searchWords && searchWords[searchWords.length - 1] !== " ") {
-      const words = searchWords.replace(/ /g, "%20");
-
+    if (search.words && search.words[search.words.length - 1] !== " ") {
       setOldSearch(new AbortController());
-
-      const page = 4;
-
-      dispatch(getResult({ mediaType, words, oldSearch, page }));
-
-      navigate(`/search/${mediaType}?by_words=${words}`);
+      dispatch(getResult({ oldSearch }));
+      navigate(
+        `/search/${search.mediaType}?by_words=${search.words}&on_page=${search.page}`
+      );
 
       return () => {
-        if (searchWords.length > 1 && oldSearch) oldSearch.abort();
+        if (search.words.length > 1 && oldSearch) oldSearch.abort();
       };
     }
-  }, [searchWords, mediaType]);
+  }, [search.words, search.mediaType, search.maxElementsGrid, search.page]);
 
-  const changeHandler = (e) => {
+  const writeHandler = (e) => {
     e.preventDefault();
-    if (searchWords === e.target.value) return;
-    setSearchWords(e.target.value);
+    if (search.words === e.target.value) return;
+    dispatch(setSearchWords(e.target.value.replace(/ /g, "%20")));
   };
 
   return (
     <div id="searchForm">
-      <form onSubmit={changeHandler}>
+      <form onSubmit={writeHandler}>
         <input
-          onChange={changeHandler}
-          value={searchWords}
+          onChange={writeHandler}
+          value={search.words}
           type="text"
           name="words"
         />

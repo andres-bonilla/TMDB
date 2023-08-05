@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import "../styles/checkTabs.css";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setMType } from "../store/mType";
+import { setMediaType } from "../store/searchSlice";
 
 export const CheckTabs = () => {
   const dispatch = useDispatch();
@@ -9,31 +9,31 @@ export const CheckTabs = () => {
   const [check, setCheck] = useState([false, false, false]);
 
   const checkHandler = (esFalso, negado) => {
-    let checkb = check;
+    let auxCheck = check;
     if (negado === 3) {
-      checkb = [false, false, false];
+      auxCheck = [false, false, false];
     } else {
-      checkb = [
-        esFalso[0] && checkb[0],
-        esFalso[1] && checkb[1],
-        esFalso[2] && checkb[2],
+      auxCheck = [
+        esFalso[0] && auxCheck[0],
+        esFalso[1] && auxCheck[1],
+        esFalso[2] && auxCheck[2],
       ];
-      checkb[negado] = !checkb[negado];
+      auxCheck[negado] = !auxCheck[negado];
     }
     dispatch(
-      setMType(
-        checkb[0] && checkb[1]
+      setMediaType(
+        auxCheck[0] && auxCheck[1]
           ? "movie_or_tv"
-          : checkb[0]
+          : auxCheck[0]
           ? "movie"
-          : checkb[1]
+          : auxCheck[1]
           ? "tv"
-          : checkb[2]
+          : auxCheck[2]
           ? "person"
           : "any"
       )
     );
-    setCheck(checkb);
+    setCheck(auxCheck);
   };
   return (
     <div id="resultsTabs">
