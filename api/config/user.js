@@ -33,6 +33,8 @@ exports.access = ({ user, session }) => {
 };
 
 exports.leave = (req) => {
-  req.logout();
+  req.logout((err) => {
+    if (err) throw new Error(err);
+  });
   return Promise.resolve({ error: false, data: "/" });
 };
