@@ -6,6 +6,6 @@ exports.urlSearchMaker = (mediaType, words, page = "1") =>
   `${urlTmdb}/search/${mediaType}?query=${words}&${apiKey}&${apiLang}&page=${page}`;
 
 exports.urlIdMaker = (mediaType, id) =>
-  `${urlTmdb}/${mediaType}/${id}?${apiKey}&${apiLang}`;
+  `${urlTmdb}/${mediaType}/${id}?append_to_response=similar&${apiKey}&${apiLang}`;
 
 exports.urlImgDataMaker = () => `${urlTmdb}/configuration?${apiKey}`;

@@ -17,13 +17,13 @@ export const App = () => {
     navigate = useNavigate(),
     location = useLocation();
 
-  const search = useSelector((state) => state.search);
+  const { search, img } = useSelector((state) => state);
 
-  useEffect(() => {
+  if (img.length === 0) {
     axios.get("/api/data/img_data").then(({ data }) => {
-      dispatch(setImg(`${data["secure_base_url"]}${data["poster_sizes"][1]}`));
+      dispatch(setImg(`${data["secure_base_url"]}${data["poster_sizes"][3]}`));
     });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }
 
   useEffect(() => {
     if (search.words !== "")
@@ -56,7 +56,10 @@ export const App = () => {
 
           <Route path="/search/*" element={<Results />} />
 
-          <Route path="/:type/:id" element={<Mediafile />} />
+          <Route
+            path="/:type/:id"
+            element={<Mediafile key={location.pathname} />}
+          />
 
           <Route path="*" element={<Navigate to={"/"} />} />
         </Routes>

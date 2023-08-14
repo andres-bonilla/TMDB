@@ -65,7 +65,7 @@ export const Results = () => {
             <Card
               data={resultado}
               media={search.mediaType}
-              key={resultado.id * index}
+              key={resultado.id * (index + 1)}
             />
           );
         })}
