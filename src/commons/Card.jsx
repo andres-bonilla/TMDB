@@ -21,11 +21,11 @@ export const Card = ({ data, media }) => {
                 urlBaseImg,
                 data["poster_path"] || data["profile_path"]
               )}
-              alt={`${data.name || data["original_title"]}`}
+              alt={`${data["name"] || data["title"]}`}
             />
           </div>
           <div className="cardTitleBox">
-            <h3 className="cardTitle">{data.name || data["original_title"]}</h3>
+            <h3 className="cardTitle">{data["name"] || data["title"]}</h3>
           </div>
         </Link>
       </div>
