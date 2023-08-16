@@ -14,52 +14,21 @@ export const Mediafile = () => {
   let [mFile, setMFile] = useState({
     imgPath: "",
     name: "",
-    description: "",
+    description: ["Ups, parece que no hay descripción."],
     state: "",
     startOn: [],
     lastOn: [],
     lang: "",
     genres: "",
-    similar: [],
+    related: [],
     companies: [],
   });
-
-  const mergeInfo = (info) => {
-    let mergedInfo = {};
-    mergedInfo.imgPath = info["poster_path"] || info["profile_path"];
-    mergedInfo.name = info["name"] || info["title"];
-    mergedInfo.description = info["overview"] || info["biography"];
-    // startOn
-
-    mergedInfo.startOn =
-      info["release_date"] || info["first_air_date"] || info["birthday"];
-    mergedInfo.startOn = mergedInfo.startOn
-      ? mergedInfo.startOn.split("-")
-      : [];
-    // lastOn
-
-    mergedInfo.lastOn = info["last_air_date"] || info["deathday"];
-    mergedInfo.lastOn = mergedInfo.lastOn ? mergedInfo.lastOn.split("-") : [];
-    // similar
-
-    mergedInfo.similar = info["similar"]
-      ? info["similar"]["results"]
-      : info["combined_credits"]
-      ? info["combined_credits"]["cast"].length >
-        info["combined_credits"]["crew"].length
-        ? info["combined_credits"]["cast"]
-        : info["combined_credits"]["crew"]
-      : [];
-    mergedInfo.similar = mergedInfo.similar
-      .sort((a, b) => b.popularity - a.popularity)
-      .slice(0, 10);
-    return mergedInfo;
-  };
 
   useEffect(() => {
     if (type) {
       axios.get(`/api/${type}/${id}`).then(({ data }) => {
-        setMFile(mergeInfo(data));
+        console.log(data);
+        setMFile(data);
       });
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -80,14 +49,16 @@ export const Mediafile = () => {
             mFile.startOn.length !== 0 ? " (" + mFile.startOn[0] + ")" : ""
           }`}</h1>
 
-          <p>{mFile.description || "Ups, parece que no hay descripción"}</p>
+          {mFile.description.map((paragraph) => {
+            return paragraph !== "" ? <p>{`${paragraph}.`}</p> : null;
+          })}
         </div>
         <h2>Relacionados</h2>
         <div id="similarBox">
           <div id="similar">
-            {mFile.similar.map((simil, index) => {
+            {mFile.related.map((item, index) => {
               return (
-                <Card data={simil} media={type} key={simil.id * (index + 1)} />
+                <Card data={item} media={type} key={item.id * (index + 1)} />
               );
             })}
           </div>

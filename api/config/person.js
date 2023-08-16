@@ -1,6 +1,38 @@
 const axios = require("axios"),
   { urlIdMaker } = require("./utils/utils");
 
+const filterInfo = (data) => {
+  let info = {};
+  info.imgPath = data["profile_path"];
+  info.name = data["name"];
+  info.description = data["biography"].split(".");
+
+  info.stars = data["popularity"];
+  info.origin = data["place_of_birth"];
+  // startOn
+
+  info.startOn = data["birthday"];
+  info.startOn = info.startOn ? info.startOn.split("-") : [];
+  // lastOn
+
+  info.lastOn = data["deathday"];
+  info.lastOn = info.lastOn ? info.lastOn.split("-") : [];
+  // similar
+
+  info.related = data["combined_credits"]
+    ? data["combined_credits"]["cast"].length >
+      data["combined_credits"]["crew"].length
+      ? data["combined_credits"]["cast"]
+      : data["combined_credits"]["crew"]
+    : [];
+  info.related = info.related
+    .sort((a, b) => b.popularity - a.popularity)
+    .slice(0, 10);
+  return info;
+};
+
 exports.getById = (id) => {
-  return axios.get(urlIdMaker("person", id)).then((res) => res.data);
+  return axios
+    .get(urlIdMaker("person", id))
+    .then((res) => filterInfo(res.data));
 };
