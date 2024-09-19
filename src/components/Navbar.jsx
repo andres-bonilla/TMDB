@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { isLoged } from "../store/userSlice";
 import { Search } from "./Search";
-import { ReactComponent as MBLogo } from "../assets/mb.svg";
-import { ReactComponent as LogInLogo } from "../assets/log.svg";
+import MBLogo from "../assets/mb.svg?react";
+import LogInLogo from "../assets/log.svg?react";
 
 export const Navbar = () => {
   const navigate = useNavigate(),

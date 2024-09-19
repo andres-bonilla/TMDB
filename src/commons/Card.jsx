@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { urlImg } from "../utils/utils";
-import { ReactComponent as NoImg } from "../assets/no-img.svg";
+import NoImg from "../assets/no-img.svg?react";
 
 export const Card = ({ data, media }) => {
   const urlBaseImg = useSelector((state) => state.img);
