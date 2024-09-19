@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { isLoged } from "../store/userSlice";
 import { Search } from "./Search";
+import { ReactComponent as MBLogo } from "../assets/mb.svg";
+import { ReactComponent as LogInLogo } from "../assets/log.svg";
 
 export const Navbar = () => {
   const navigate = useNavigate(),
@@ -35,37 +37,30 @@ export const Navbar = () => {
 
   return (
     <div id="navbar">
-      <div id="logo">
-        <Link to="/">
-          <h1>Movie BASE</h1>
-        </Link>
-      </div>
+      <Link to="/">
+        <MBLogo id="logo" />
+      </Link>
 
       <Search />
-
-      <div id="logButton">
-        {loged ? (
-          <button
-            className="buttons"
-            style={{ backgroundColor: "red" }}
-            type="button"
-            name="Cerrar sesion"
-            onClick={logOut}
-          >
-            Cerrar sesion
-          </button>
-        ) : (
-          <button
-            className="buttons"
-            style={{ backgroundColor: "green" }}
-            type="button"
-            name="Iniciar sesion"
-            onClick={logIn}
-          >
-            Iniciar sesion
-          </button>
-        )}
-      </div>
+      {/*loged ? (
+        <button
+          className="logButton buttons"
+          type="button"
+          name="Cerrar sesion"
+          onClick={logOut}
+        >
+          <LogInLogo style={{ fill: "red" }} />
+        </button>
+      ) : (
+        <button
+          className="logButton buttons"
+          type="button"
+          name="Iniciar sesion"
+          onClick={logIn}
+        >
+          <LogInLogo style={{ fill: "green" }} />
+        </button>
+      )*/}
     </div>
   );
 };

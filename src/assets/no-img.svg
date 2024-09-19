@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 144 216" xmlns="http://www.w3.org/2000/svg">
+  <defs/>
+  <path d="M 0 0 H 28.8 V 216 H 0 V 0 Z" style="fill: rgb(204, 204, 204); opacity: 0.2;"/>
+  <path d="M 28.8 0 H 57.6 V 216 H 28.8 V 0 Z" style="fill: rgb(166, 166, 166); opacity: 0.2;"/>
+  <path d="M 57.6 0 H 86.4 V 216 H 57.6 V 0 Z" style="fill: rgb(115, 115, 115); opacity: 0.2;"/>
+  <path d="M 86.4 0 H 115.2 V 216 H 86.4 V 0 Z" style="fill: rgb(77, 77, 77); opacity: 0.2;"/>
+  <path d="M 115.2 0 H 144 V 216 H 115.2 V 0 Z" style="fill: rgb(38, 38, 38); opacity: 0.2;"/>
+</svg>
