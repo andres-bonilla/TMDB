@@ -57,7 +57,7 @@ export const Results = () => {
   if (search.status === "rejected") return <h1>Too FAST</h1>;
 
   return (
-    <div id="resultsBox">
+    <>
       <CheckTabs />
       <div id="resultsGrid">
         {search.pageData.map((resultado, index) => {
@@ -71,6 +71,6 @@ export const Results = () => {
         })}
       </div>
       <PageSelector />
-    </div>
+    </>
   );
 };

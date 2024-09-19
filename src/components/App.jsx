@@ -39,10 +39,10 @@ export const App = () => {
   }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div id="container">
+    <>
       <Navbar />
 
-      <div id="content">
+      <main id="content">
         <Routes>
           <Route path="/" element={<></>} />
 
@@ -63,9 +63,9 @@ export const App = () => {
 
           <Route path="*" element={<Navigate to={"/"} />} />
         </Routes>
-      </div>
+      </main>
 
       <Footbar />
-    </div>
+    </>
   );
 };

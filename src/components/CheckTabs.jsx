@@ -51,53 +51,45 @@ export const CheckTabs = () => {
   };
   return (
     <div id="resultsTabs">
-      <div className="tab" id="tab0">
-        <label>
-          <input
-            onChange={() => checkHandler([], 3)}
-            checked={!(check[0] || check[1] || check[2])}
-            type="checkbox"
-            name="movie"
-          />
-          <span>Todos</span>
-        </label>
-      </div>
+      <label className="tab" id="tab0">
+        <input
+          onChange={() => checkHandler([], 3)}
+          checked={!(check[0] || check[1] || check[2])}
+          type="checkbox"
+          name="movie"
+        />
+        <span>Todos</span>
+      </label>
 
-      <div className="tab" id="tab1">
-        <label>
-          <input
-            onChange={() => checkHandler([true, true, false], 0)}
-            checked={check[0]}
-            type="checkbox"
-            name="movie"
-          />
-          <span>Pelicula</span>
-        </label>
-      </div>
+      <label className="tab" id="tab1">
+        <input
+          onChange={() => checkHandler([true, true, false], 0)}
+          checked={check[0]}
+          type="checkbox"
+          name="movie"
+        />
+        <span>Pelicula</span>
+      </label>
 
-      <div className="tab" id="tab2">
-        <label>
-          <input
-            onChange={() => checkHandler([true, true, false], 1)}
-            checked={check[1]}
-            type="checkbox"
-            name="tv"
-          />
-          <span>Televisión</span>
-        </label>
-      </div>
+      <label className="tab" id="tab2">
+        <input
+          onChange={() => checkHandler([true, true, false], 1)}
+          checked={check[1]}
+          type="checkbox"
+          name="tv"
+        />
+        <span>Televisión</span>
+      </label>
 
-      <div className="tab" id="tab3">
-        <label>
-          <input
-            onChange={() => checkHandler([false, false, true], 2)}
-            checked={check[2]}
-            type="checkbox"
-            name="person"
-          />
-          <span>Personas</span>
-        </label>
-      </div>
+      <label className="tab" id="tab3">
+        <input
+          onChange={() => checkHandler([false, false, true], 2)}
+          checked={check[2]}
+          type="checkbox"
+          name="person"
+        />
+        <span>Personas</span>
+      </label>
     </div>
   );
 };

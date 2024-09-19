@@ -1,59 +1,65 @@
 #navbar {
-  display: flex;
-  width: 100%;
-  height: 64px;
-  align-items: center;
-  position: fixed;
+  position: sticky;
   top: 0;
-  background-color: rgb(48, 58, 72);
-  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 72px;
+  padding: 0 22%; /*
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);*/
+
+  background-color: #fdf6ec; /*hsl(43, 32%, 92%); #dedfe4;*/
 }
 
 #logo {
-  display: inline-block;
-  width: 72px;
-  margin-left: 32px;
-  height: min-content;
-}
-
-#logo a {
-  text-decoration: none;
-  color: white;
-}
-
-#logo h1 {
-  margin: 0px;
-  font-weight: 900;
-  font-size: 1.3em;
+  margin: 4px;
+  margin-bottom: 0;
+  height: 36px;
 }
 
 #searchForm {
-  display: inline-block;
-  height: min-content;
-  width: calc(100% - 200px);
-  padding: 0px 32px;
+  width: 75%;
+  min-width: 328px;
+  margin-right: 4px;
 }
-
-#searchForm form input {
+/*
+#searchForm input {
   width: 100%;
-  padding: 3px 6px;
-  font-size: 1.2em;
   color: #08224c;
-}
+}*/
 
-#logButton {
-  display: inline-block;
-  width: 64px;
-  height: min-content;
-  margin-right: 32px;
-}
-
-#logButton button {
-  /*Sera un logo que ocupe 48*48 pixeles*/
+#search {
   width: 100%;
-  padding: 6px;
-  border-radius: 4px;
-  font-weight: 500;
-  font-size: 1em;
-  color: white;
+  padding: 0 16px;
+  border-radius: 8px 8px 0px 0px;
+  outline: 0;
+
+  font-size: 1.3rem;
+  line-height: 2rem;
+
+  border: 2px solid hsl(0, 0%, 65%);
+  background: #fdf6ec;
+  color: hsl(0, 0%, 50%);
+}
+
+#search:hover {
+  border: 2px solid hsl(0, 0%, 15%);
+  background: #fdf6ec;
+  color: hsl(0, 0%, 15%);
+}
+
+#search:focus {
+  border: 2px solid transparent;
+  border-bottom: 2px solid hsl(0, 0%, 15%);
+  background: #fdf6ec;
+  color: hsl(0, 0%, 15%);
+}
+
+.logButton {
+  width: 38px;
+  height: 38px;
+  padding: 4px;
+  border-radius: 8px 8px 1px 1px;
+  background: transparent;
 }
