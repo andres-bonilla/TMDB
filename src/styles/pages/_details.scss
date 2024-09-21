@@ -1,0 +1,49 @@
+@use "../variables" as *;
+
+.poster {
+  width: clamp(200px, 20%, 360px);
+  position: fixed;
+}
+
+.details {
+  margin-left: min(420px, 30%);
+  color: $text_color;
+}
+
+.details-title {
+  text-align: center;
+  margin-top: 0;
+}
+
+.related-title {
+  text-align: center;
+  margin-left: min(420px, 30%);
+}
+
+.related-container {
+  overflow-x: auto;
+  margin-bottom: 72px;
+  margin-left: min(420px, 30%);
+
+  .list {
+    width: clamp(1544px, 240%, 2444px);
+  }
+}
+
+@media (max-width: 950px) {
+  .poster {
+    position: static;
+    width: 230px;
+    margin: 0px auto;
+  }
+
+  .details,
+  .related-title,
+  .related-container {
+    margin-left: 0;
+  }
+
+  .related-container .list {
+    width: 1704px;
+  }
+}

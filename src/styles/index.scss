@@ -1,0 +1,18 @@
+//Base
+@use "./resets.scss";
+@use "./base.scss";
+@use "./main.scss";
+
+//Layouts
+@use "./layouts/head.scss";
+@use "./layouts/foot.scss";
+
+//Pages
+@use "./pages/home.scss";
+@use "./pages/details.scss";
+
+//Components
+@use "./components/hero.scss";
+@use "./components/grid.scss";
+@use "./components/commons/list.scss";
+@use "./components/commons/tile.scss";

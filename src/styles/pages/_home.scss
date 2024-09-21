@@ -1,0 +1,16 @@
+.home-first {
+  margin-top: calc(50vh - 56px);
+}
+
+.l-title {
+  text-align: center;
+}
+
+.list-container {
+  margin-bottom: 72px;
+  overflow-x: auto;
+
+  .list {
+    width: clamp(1704px, 230%, 2544px);
+  }
+}

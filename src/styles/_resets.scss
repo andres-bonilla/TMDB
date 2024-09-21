@@ -1,0 +1,32 @@
+html,
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#root {
+  width: 100%;
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  all: unset;
+
+  :focus {
+    outline: revert;
+  }
+}
+
+.no-link-style {
+  color: inherit;
+  text-decoration: none;
+}

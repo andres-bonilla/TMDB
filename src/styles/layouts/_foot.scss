@@ -1,0 +1,20 @@
+@use "../variables" as *;
+
+#foot {
+  display: flex;
+  width: 100%;
+  padding: 32px;
+  justify-content: end;
+  gap: 16px;
+
+  background: $text_color;
+}
+#label-tmdb {
+  line-height: 24px;
+  font-weight: 700;
+
+  color: $back_color;
+}
+#tmdb-logo {
+  height: 24px;
+}
