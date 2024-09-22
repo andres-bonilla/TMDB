@@ -1,61 +1,47 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { Routes, Route } from "react-router";
 import { Head } from "./layouts/Head.jsx";
 import { Foot } from "./layouts/Foot.jsx";
 import { Home } from "./pages/Home.jsx";
 import { Results } from "./pages/Results.jsx";
 import { Details } from "./pages/Details.jsx";
+import { useDispatch } from "react-redux";
+import { useAxios } from "./utils/useAxios.jsx";
+import { setImg } from "./store/img";
+import { ResetScroll } from "./utils/ResetScroll.jsx";
 
 export const App = () => {
-  const allesList = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
-  const alles = [
-    "a",
-    "b",
-    "c",
-    "El mundo perdido de Timmy",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-  ];
+  const dispatch = useDispatch();
+
+  const { loading, data, err } = useAxios({
+    method: "get",
+    url: "/api/data/img_data",
+  });
+
+  useEffect(() => {
+    if (!loading)
+      dispatch(setImg(`${data["secure_base_url"]}${data["poster_sizes"][3]}`));
+  }, [loading]);
+
   return (
     <>
       <Head />
 
       <main id="content2">
-        <Routes>
-          <Route path="/" element={<Home alles={allesList} />} />
-          <Route path="/search/*" element={<Results alles={alles} />} />
-          <Route path="/details/" element={<Details alles={allesList} />} />
-        </Routes>
+        <ResetScroll>
+          <Routes>
+            <Route path="/" element={<Home />} />
+
+            <Route path="/search/:type/:words" element={<Results />} />
+
+            <Route path="/search/*" element={<Results />} />
+
+            <Route path="details/:type/:id" element={<Details />} />
+
+            <Route path="*" element={<Navigate to={"/"} />} />
+          </Routes>
+        </ResetScroll>
       </main>
 
       <Foot />

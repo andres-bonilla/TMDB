@@ -1,12 +1,15 @@
-const axios = require("axios"),
-  { urlSearchMaker } = require("./utils/utils");
+const { reqsByPage, filterRes } = require("./utils/filters");
 
 exports.anyByWords = (words, page) => {
-  return axios
-    .get(urlSearchMaker("multi", words, page))
-    .then((res) => res.data)
+  /*index of first element*/
+  const num = 36;
+  const initIndex = ((page - 1) * num) % 20;
+  const reqs = reqsByPage("multi", words, page, num);
+
+  return Promise.all(reqs)
+    .then((allRes) => filterRes(allRes, "any", initIndex, initIndex + num))
     .then((data) => {
-      return { error: false, data: data.results };
+      return { error: false, data: data };
     })
     .catch((err) => {
       console.log(err);
@@ -15,11 +18,15 @@ exports.anyByWords = (words, page) => {
 };
 
 exports.movieByWords = (words, page) => {
-  return axios
-    .get(urlSearchMaker("movie", words, page))
-    .then((res) => res.data)
+  /*index of first element*/
+  const num = 36;
+  const initIndex = ((page - 1) * num) % 20;
+  const reqs = reqsByPage("movie", words, page, num);
+
+  return Promise.all(reqs)
+    .then((allRes) => filterRes(allRes, "movie", initIndex, initIndex + num))
     .then((data) => {
-      return { error: false, data: data.results };
+      return { error: false, data: data };
     })
     .catch((err) => {
       console.log(err);
@@ -28,11 +35,15 @@ exports.movieByWords = (words, page) => {
 };
 
 exports.tvByWords = (words, page) => {
-  return axios
-    .get(urlSearchMaker("tv", words, page))
-    .then((res) => res.data)
+  /*index of first element*/
+  const num = 36;
+  const initIndex = ((page - 1) * num) % 20;
+  const reqs = reqsByPage("tv", words, page, num);
+
+  return Promise.all(reqs)
+    .then((allRes) => filterRes(allRes, "tv", initIndex, initIndex + num))
     .then((data) => {
-      return { error: false, data: data.results };
+      return { error: false, data: data };
     })
     .catch((err) => {
       console.log(err);
@@ -41,11 +52,15 @@ exports.tvByWords = (words, page) => {
 };
 
 exports.personByWords = (words, page) => {
-  return axios
-    .get(urlSearchMaker("person", words, page))
-    .then((res) => res.data)
+  /*index of first element*/
+  const num = 36;
+  const initIndex = ((page - 1) * num) % 20;
+  const reqs = reqsByPage("person", words, page, num);
+
+  return Promise.all(reqs)
+    .then((allRes) => filterRes(allRes, "person", initIndex, initIndex + num))
     .then((data) => {
-      return { error: false, data: data.results };
+      return { error: false, data: data };
     })
     .catch((err) => {
       console.log(err);

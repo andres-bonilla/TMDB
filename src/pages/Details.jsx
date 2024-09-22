@@ -1,54 +1,49 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import { List } from "../components/commons/List";
-import { Tile } from "../components/commons/Tile";
+import { useParams } from "react-router";
+import { useAxios } from "../utils/useAxios.jsx";
+import { useImgUrl } from "../utils/useImgUrl.jsx";
+import NoImg from "../assets/no-img.svg?react";
 
-export const Details = ({ alles }) => {
-  return (
+export const Details = () => {
+  const { type, id } = useParams();
+
+  const { loading, data, err } = useAxios({
+    method: "get",
+    url: `/api/${type}/${id}`,
+  });
+
+  const imgUrl = useImgUrl(!loading && data ? data.img : "");
+  return !loading ? (
     <>
-      <ul className="poster">
-        <Tile item={"x"} />
-        <li>
-          <h2>Social Net</h2>
-        </li>
-      </ul>
+      <div className="poster">
+        {data.img ? (
+          <img src={imgUrl} alt={data.name} className="m-img" />
+        ) : (
+          <NoImg className="m-img" />
+        )}
+        <h2></h2>
+      </div>
       <div className="details">
-        <h1 className="details-title">title</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis
-          facere ex laudantium voluptas iste dolorem at veritatis quam aliquid
-          dolore quidem dolorum impedit, tempora praesentium? Eius tenetur
-          expedita nisi ullam.
-        </p>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis
-          quibusdam debitis aliquid harum aliquam, iure similique ut itaque
-          explicabo! Molestiae temporibus laboriosam aut unde debitis corrupti
-          doloribus fuga sed accusamus!
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam
-          minus veniam facere, voluptates quae natus ipsa tempora! Eligendi nemo
-          expedita quas id est, enim quidem accusantium laudantium ad optio
-          ducimus.
-        </p>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis
-          quibusdam debitis aliquid harum aliquam, iure similique ut itaque
-          explicabo! Molestiae temporibus laboriosam aut unde debitis corrupti
-          doloribus fuga sed accusamus!
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam
-          minus veniam facere, voluptates quae natus ipsa tempora! Eligendi nemo
-          expedita quas id est, enim quidem accusantium laudantium ad optio
-          ducimus.
-        </p>
+        <h1 className="details-title">{data.name}</h1>
+        {data.description[0] !== "" ? (
+          data.description.map((text, i) =>
+            text !== "" ? <p key={i}>{text}.</p> : <></>
+          )
+        ) : (
+          <p>No hay descripción</p>
+        )}
       </div>
-      <h2 className="related-title">Title</h2>
-      <div className="related-container">
-        <List alles={alles} />
-      </div>
+      {data.related.length && (
+        <>
+          <h2 className="related-title">Relacionados</h2>
+          <div className="related-container">
+            <List data={data.related} />
+          </div>
+        </>
+      )}
     </>
+  ) : (
+    <></>
   );
 };

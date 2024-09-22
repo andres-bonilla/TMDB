@@ -3,8 +3,13 @@ import { Link } from "react-router-dom";
 
 import { Tile } from "./commons/Tile.jsx";
 
-export const Grid = ({ alles }) => {
-  const mapResult = (list) => list.map((item) => <Tile item={item} />);
+export const Grid = ({ data }) => {
+  const mapResult = (list) =>
+    list.map((item) => (
+      <li key={item.mediaType + item.id} className="tile">
+        <Tile item={item} />
+      </li>
+    ));
 
-  return <ul id="grid">{mapResult(alles)}</ul>;
+  return <ul id="grid">{mapResult(data)}</ul>;
 };

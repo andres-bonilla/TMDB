@@ -3,12 +3,17 @@ import { Link } from "react-router-dom";
 
 import { Tile } from "./Tile.jsx";
 
-export const List = ({ alles }) => {
-  const mapResult = (list) => list.map((item) => <Tile item={item} />);
+export const List = ({ data }) => {
+  const mapResult = (list) =>
+    list.map((item, i) => (
+      <li key={i} className="tile">
+        <Tile item={item} />
+      </li>
+    ));
 
   return (
     <>
-      <ul className="list">{mapResult(alles)}</ul>
+      <ul className="list">{mapResult(data)}</ul>
     </>
   );
 };

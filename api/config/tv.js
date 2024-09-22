@@ -1,11 +1,14 @@
 const axios = require("axios"),
-  { urlIdMaker } = require("./utils/utils");
+  { urlIdMaker } = require("./utils/urlMaker"),
+  { filterList } = require("./utils/filters");
 
 const filterInfo = (data) => {
   let info = {};
-  info.imgPath = data["poster_path"];
+  info.id = data["id"];
   info.name = data["name"];
-  info.description = data["overview"].split(".");
+  info.backdrop = data["backdrop_path"];
+  info.img = data["poster_path"];
+  info.description = data["overview"].split(". ");
   info.state = data["in_production"];
   info.lang = data["original_language"];
   info.genres = data["genres"];
@@ -23,12 +26,14 @@ const filterInfo = (data) => {
   info.startOn = data["first_air_date"];
   info.startOn = info.startOn ? info.startOn.split("-") : [];
 
-  // similar
+  // related
   info.related = data["similar"] ? data["similar"]["results"] : [];
   info.related = info.related
     .sort((a, b) => b.popularity - a.popularity)
     .slice(0, 10);
-
+  info.related = filterList(info.related, "tv");
+  /////////////////////////////////////////////////////////////////
+  console.log(info);
   return info;
 };
 

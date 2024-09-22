@@ -6,8 +6,10 @@
 }
 
 .details {
+  padding-bottom: 12px;
   margin-left: min(420px, 30%);
   color: $text_color;
+  border-bottom: 1px solid black;
 }
 
 .details-title {
@@ -17,6 +19,7 @@
 
 .related-title {
   text-align: center;
+  margin-top: 48px;
   margin-left: min(420px, 30%);
 }
 

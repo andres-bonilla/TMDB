@@ -1,11 +1,14 @@
 const axios = require("axios"),
-  { urlIdMaker } = require("./utils/utils");
+  { urlIdMaker } = require("./utils/urlMaker");
+const { filterList } = require("./utils/filters");
 
 const filterInfo = (data) => {
   let info = {};
-  info.imgPath = data["poster_path"];
+  info.id = data["id"];
   info.name = data["title"];
-  info.description = data["overview"].split(".");
+  info.img = data["poster_path"];
+  info.backdrop = data["backdrop_path"];
+  info.description = data["overview"].split(". ");
   info.state = data["status"];
   info.lang = data["original_language"];
   info.genres = data["genres"];
@@ -23,7 +26,9 @@ const filterInfo = (data) => {
   info.related = info.related
     .sort((a, b) => b.popularity - a.popularity)
     .slice(0, 10);
+  info.related = filterList(info.related, "movie");
 
+  console.log(data);
   return info;
 };
 

@@ -4,22 +4,29 @@
 #hero:after {
   z-index: 0;
   position: absolute;
-  top: 0;
   left: 0;
   width: 100%;
 }
 
 #hero {
-  height: 50vh;
-  background: rgb(43, 49, 52);
+  top: 56px;
+  display: flex;
+  justify-content: center;
+  height: 50vh; /*
+  background: rgb(43, 49, 52);*/
 }
 
 #hero:after /*header blur*/ {
   content: "";
+  top: -52px;
   height: 128px;
   background: linear-gradient(
     $back_color 50%,
     transparent 70%,
     transparent 100%
   );
+}
+
+.hero-img {
+  filter: grayscale(1);
 }

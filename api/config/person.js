@@ -1,9 +1,9 @@
 const axios = require("axios"),
-  { urlIdMaker } = require("./utils/utils");
+  { urlIdMaker } = require("./utils/urlMaker");
 
 const filterInfo = (data) => {
   let info = {};
-  info.imgPath = data["profile_path"];
+  info.img = data["profile_path"];
   info.name = data["name"];
   info.description = data["biography"].split(".");
 

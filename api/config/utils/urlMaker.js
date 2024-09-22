@@ -1,5 +1,5 @@
-const apiKey = "api_key=22d3fd94d0f9fd60515cd799770db756",
-  urlTmdb = "https://api.themoviedb.org/3",
+const urlTmdb = "https://api.themoviedb.org/3",
+  apiKey = "api_key=22d3fd94d0f9fd60515cd799770db756",
   apiLang = "language=es-MX";
 
 exports.urlSearchMaker = (mediaType, words, page = "1") =>
@@ -14,3 +14,11 @@ exports.urlIdMaker = (mediaType, id) => {
 };
 
 exports.urlImgDataMaker = () => `${urlTmdb}/configuration?${apiKey}`;
+
+exports.urlTopListMaker = () => [
+  `${urlTmdb}/movie/popular?${apiKey}&${apiLang}`,
+  `${urlTmdb}/trending/all/day?${apiKey}&${apiLang}`,
+  `${urlTmdb}/tv/top_rated?${apiKey}&${apiLang}`,
+];
+
+// `${urlTmdb}/movie/latest?${apiKey}&${apiLang}`,
