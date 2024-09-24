@@ -9,6 +9,8 @@ exports.topLists = (req, res) => {
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };
 
-exports.urlImgData = (req, res) => {
-  data.urlImgData().then((datos) => res.send(datos));
+exports.imgData = (req, res) => {
+  data
+    .imgData()
+    .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };

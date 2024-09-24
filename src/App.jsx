@@ -8,7 +8,7 @@ import { Results } from "./pages/Results.jsx";
 import { Details } from "./pages/Details.jsx";
 import { useDispatch } from "react-redux";
 import { useAxios } from "./utils/useAxios.jsx";
-import { setImg } from "./store/img";
+import { setImgData } from "./store/img";
 import { ResetScroll } from "./utils/ResetScroll.jsx";
 
 export const App = () => {
@@ -20,8 +20,7 @@ export const App = () => {
   });
 
   useEffect(() => {
-    if (!loading)
-      dispatch(setImg(`${data["secure_base_url"]}${data["poster_sizes"][3]}`));
+    if (!loading) dispatch(setImgData(data));
   }, [loading]);
 
   return (
@@ -33,9 +32,13 @@ export const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
 
+            <Route path="/search/:type/:words/on/:page" element={<Results />} />
+
             <Route path="/search/:type/:words" element={<Results />} />
 
             <Route path="/search/*" element={<Results />} />
+
+            <Route path="/search" element={<Results />} />
 
             <Route path="details/:type/:id" element={<Details />} />
 

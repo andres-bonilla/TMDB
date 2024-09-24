@@ -1,0 +1,31 @@
+#search-form {
+  width: 100%;
+  padding-right: 60px;
+}
+
+#search {
+  width: 100%;
+  padding: 0 16px;
+  border-radius: 8px 8px 0px 0px;
+  outline: 0;
+
+  font-size: 1.3rem;
+  line-height: 2.2rem;
+
+  border: 2px solid hsl(0, 0%, 65%);
+  background: #fdf6ec;
+  color: hsl(0, 0%, 50%);
+}
+
+#search:hover {
+  border: 2px solid hsl(0, 0%, 15%);
+  background: #fdf6ec;
+  color: hsl(0, 0%, 15%);
+}
+
+#search:focus {
+  border: 2px solid transparent;
+  border-bottom: 2px solid hsl(0, 0%, 15%);
+  background: #fdf6ec;
+  color: hsl(0, 0%, 15%);
+}

@@ -1,35 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 export const Search = () => {
-  const navigate = useNavigate();
-
-  const search = useSelector((state) => state.search);
-
   const [words, setWords] = useState("");
 
-  useEffect(() => {
-    setWords(search.words);
-  }, [search.words]);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const writeHandler = (e) => {
+  useEffect(() => {
+    if (location.pathname.indexOf("search/") !== -1) {
+      setWords(location.pathname.split("/")[3].replaceAll("%20", " "));
+    } else {
+      setWords("");
+    }
+  }, [location]);
+
+  const navControl = (e) => {
     e.preventDefault();
-    if (search.words === e.target.value) return;
-    if (!e.target.value) return;
-    setWords(e.target.value.replace(/ /g, "%20"));
-    navigate(
-      `/search/${search.mediaType}/${e.target.value.replace(/ /g, "%20")}/on/${
-        search.page
-      }`
-    );
+
+    if (!e.target.value) {
+      navigate(`/search`);
+      return;
+    }
+
+    if (words === e.target.value) return;
+
+    navigate(`/search/any/${e.target.value.replaceAll(/ /g, "%20")}/on/1`);
   };
 
   return (
-    <form id="searchForm" onSubmit={writeHandler}>
+    <form id="search-form" target="search" onSubmit={navControl}>
       <input
         id="search"
-        onChange={writeHandler}
+        onChange={navControl}
         value={words}
         type="text"
         name="words"

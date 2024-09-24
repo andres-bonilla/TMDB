@@ -1,11 +1,12 @@
 const axios = require("axios"),
   { urlIdMaker } = require("./utils/urlMaker");
+const { filterList } = require("./utils/filters");
 
 const filterInfo = (data) => {
   let info = {};
   info.img = data["profile_path"];
   info.name = data["name"];
-  info.description = data["biography"].split(".");
+  info.description = data["biography"].split(". ");
 
   info.stars = data["popularity"];
   info.origin = data["place_of_birth"];
@@ -28,6 +29,8 @@ const filterInfo = (data) => {
   info.related = info.related
     .sort((a, b) => b.popularity - a.popularity)
     .slice(0, 10);
+  info.related = filterList(info.related, "any");
+
   return info;
 };
 

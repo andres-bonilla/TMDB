@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import MBLogo from "../assets/mb.svg?react";
-import { Search } from "../components/Search3";
+import { Search } from "../components/Search";
 
 export const Head = () => {
   return (

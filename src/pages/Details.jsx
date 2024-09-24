@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { List } from "../components/commons/List";
 import { useParams } from "react-router";
 import { useAxios } from "../utils/useAxios.jsx";
@@ -8,42 +8,52 @@ import NoImg from "../assets/no-img.svg?react";
 export const Details = () => {
   const { type, id } = useParams();
 
-  const { loading, data, err } = useAxios({
+  const noParams = type === undefined || id === undefined;
+
+  const { loading, data } = useAxios({
     method: "get",
-    url: `/api/${type}/${id}`,
+    url: noParams ? "" : `/api/${type}/${id}`,
   });
 
-  const imgUrl = useImgUrl(!loading && data ? data.img : "");
-  return !loading ? (
+  const imgUrl = useImgUrl(data ? data.img : "", "poster", 4);
+
+  const mapDescription = (description) => {
+    if (description[0] === "") return <p>No hay descripción</p>;
+
+    return description.map((text, i) =>
+      text !== "" ? <p key={i}>{text}.</p> : <></>
+    );
+  };
+
+  if (noParams) return <p>Tipo o ID erroneos</p>;
+
+  if (loading) return <p>Cargando...</p>;
+
+  if (!data) return <p>Este elemento no existe. Lo siento</p>;
+
+  return (
     <>
       <div className="poster">
-        {data.img ? (
-          <img src={imgUrl} alt={data.name} className="m-img" />
-        ) : (
+        {imgUrl === "No image" ? (
           <NoImg className="m-img" />
+        ) : (
+          <img src={imgUrl} alt={data.name} className="m-img" />
         )}
         <h2></h2>
       </div>
       <div className="details">
         <h1 className="details-title">{data.name}</h1>
-        {data.description[0] !== "" ? (
-          data.description.map((text, i) =>
-            text !== "" ? <p key={i}>{text}.</p> : <></>
-          )
-        ) : (
-          <p>No hay descripción</p>
-        )}
+        {mapDescription(data.description)}
       </div>
+
       {data.related.length && (
-        <>
-          <h2 className="related-title">Relacionados</h2>
-          <div className="related-container">
-            <List data={data.related} />
-          </div>
-        </>
+        <List
+          data={data.related}
+          titleText="Relacionados"
+          boxClass={"related-container"}
+          titleClass={"related-title"}
+        />
       )}
     </>
-  ) : (
-    <></>
   );
 };

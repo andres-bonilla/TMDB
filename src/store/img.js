@@ -1,17 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = "";
+const initialState = {};
 
 export const imgSlice = createSlice({
   name: "img",
   initialState,
   reducers: {
-    setImg(state, action) {
+    setImgData(state, action) {
       return action.payload;
     },
   },
 });
 
-export const { setImg } = imgSlice.actions;
+export const { setImgData } = imgSlice.actions;
 
 export default imgSlice.reducer;

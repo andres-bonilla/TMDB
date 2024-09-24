@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 export const useAxios = (params) => {
@@ -6,15 +6,19 @@ export const useAxios = (params) => {
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(true);
 
+  const abortControlRef = useRef(new AbortController());
+
+  const cancel = () => abortControlRef.current.abort();
+
   useEffect(() => {
-    axios
-      .request(params)
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((error) => setErr(error))
-      .finally(() => setLoading(false));
+    if (params.url) {
+      axios
+        .request({ ...params, signal: abortControlRef.current.signal })
+        .then((res) => setData(res.data))
+        .catch((error) => setErr(error))
+        .finally(() => setLoading(false));
+    }
   }, [params.url]);
 
-  return { loading, data, err };
+  return { loading, data, err, cancel };
 };

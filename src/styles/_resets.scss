@@ -20,10 +20,9 @@ ul {
 
 button {
   all: unset;
-
-  :focus {
-    outline: revert;
-  }
+}
+button:focus {
+  outline: revert;
 }
 
 .no-link-style {

@@ -9,7 +9,7 @@ exports.reqsByPage = (mediaType, words, page, num) => {
 
   for (let tmdbPage = firstPage; tmdbPage <= lastPage; tmdbPage++)
     reqs.push(axios.get(urlSearchMaker(mediaType, words, tmdbPage)));
-  /*TMDB request for 36 elements*/
+  /*TMDB request for num number of elements*/
 
   return reqs;
 };

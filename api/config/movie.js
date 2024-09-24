@@ -28,7 +28,6 @@ const filterInfo = (data) => {
     .slice(0, 10);
   info.related = filterList(info.related, "movie");
 
-  console.log(data);
   return info;
 };
 

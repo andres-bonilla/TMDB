@@ -1,14 +1,10 @@
 .home-first {
-  margin-top: calc(50vh - 56px);
-}
-
-.l-title {
-  text-align: center;
+  margin-top: 450px;
 }
 
 .list-container {
   margin-bottom: 72px;
-  overflow-x: auto;
+  overflow-x: hidden;
 
   .list {
     width: clamp(1704px, 230%, 2544px);

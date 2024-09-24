@@ -16,9 +16,21 @@ exports.urlIdMaker = (mediaType, id) => {
 exports.urlImgDataMaker = () => `${urlTmdb}/configuration?${apiKey}`;
 
 exports.urlTopListMaker = () => [
-  `${urlTmdb}/movie/popular?${apiKey}&${apiLang}`,
-  `${urlTmdb}/trending/all/day?${apiKey}&${apiLang}`,
-  `${urlTmdb}/tv/top_rated?${apiKey}&${apiLang}`,
+  {
+    media: "movie",
+    name: "Popular",
+    url: `${urlTmdb}/movie/popular?${apiKey}&${apiLang}`,
+  },
+  {
+    media: "any",
+    name: "Trending",
+    url: `${urlTmdb}/trending/all/day?${apiKey}&${apiLang}`,
+  },
+  {
+    media: "tv",
+    name: "Top Rated",
+    url: `${urlTmdb}/tv/top_rated?${apiKey}&${apiLang}`,
+  },
 ];
 
 // `${urlTmdb}/movie/latest?${apiKey}&${apiLang}`,
