@@ -8,31 +8,42 @@ export const Search = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname.indexOf("search/") !== -1) {
-      setWords(location.pathname.split("/")[3].replaceAll("%20", " "));
-    } else {
+    const path = location.pathname;
+
+    if (path.indexOf("search/") === -1) {
       setWords("");
+      return;
+    }
+
+    if (!words && path.split("/").length === 6 && path.split("/")[3]) {
+      setWords(path.split("/")[3].replaceAll("%20", " "));
+      return;
+    }
+    if (path.split("/").length === 6 && !path.split("/")[3]) {
+      setWords("");
+      navigate(`/search`);
+      return;
     }
   }, [location]);
 
-  const navControl = (e) => {
+  const wordsHandler = (e) => {
     e.preventDefault();
 
     if (!e.target.value) {
+      setWords("");
       navigate(`/search`);
       return;
     }
 
-    if (words === e.target.value) return;
-
+    setWords(e.target.value);
     navigate(`/search/any/${e.target.value.replaceAll(/ /g, "%20")}/on/1`);
   };
 
   return (
-    <form id="search-form" target="search" onSubmit={navControl}>
+    <form id="search-form" target="search" onSubmit={wordsHandler}>
       <input
         id="search"
-        onChange={navControl}
+        onChange={wordsHandler}
         value={words}
         type="text"
         name="words"

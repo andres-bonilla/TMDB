@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import NoImg from "../../assets/no-img.svg?react";
+
 import { useImgUrl } from "../../utils/useImgUrl";
+
+import NoImg from "../../assets/no-img.svg?react";
 
 export const Tile = ({ item }) => {
   const imgUrl = useImgUrl(

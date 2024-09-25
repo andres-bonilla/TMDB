@@ -1,8 +1,11 @@
 import React from "react";
-import { List } from "../components/commons/List";
 import { useParams } from "react-router";
+
+import { List } from "../components/commons/List";
+
 import { useAxios } from "../utils/useAxios.jsx";
 import { useImgUrl } from "../utils/useImgUrl.jsx";
+
 import NoImg from "../assets/no-img.svg?react";
 
 export const Details = () => {
@@ -17,6 +20,12 @@ export const Details = () => {
 
   const imgUrl = useImgUrl(data ? data.img : "", "poster", 4);
 
+  if (noParams) return <p>Tipo o ID erroneos</p>;
+
+  if (loading) return <p>Cargando...</p>;
+
+  if (!data) return <p>Este elemento no existe. Lo siento</p>;
+
   const mapDescription = (description) => {
     if (description[0] === "") return <p>No hay descripción</p>;
 
@@ -24,12 +33,6 @@ export const Details = () => {
       text !== "" ? <p key={i}>{text}.</p> : <></>
     );
   };
-
-  if (noParams) return <p>Tipo o ID erroneos</p>;
-
-  if (loading) return <p>Cargando...</p>;
-
-  if (!data) return <p>Este elemento no existe. Lo siento</p>;
 
   return (
     <>

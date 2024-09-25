@@ -1,6 +1,8 @@
 import React from "react";
+
 import { List } from "../components/commons/List.jsx";
 import { Hero } from "../components/Hero.jsx";
+
 import { useAxios } from "../utils/useAxios.jsx";
 
 export const Home = () => {

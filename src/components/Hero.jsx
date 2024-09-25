@@ -1,6 +1,8 @@
 import React from "react";
-import { useImgUrl } from "../utils/useImgUrl";
+
 import { List } from "./commons/List";
+
+import { useImgUrl } from "../utils/useImgUrl";
 
 export const Hero = ({ list }) => {
   const imgIndex = 7;
