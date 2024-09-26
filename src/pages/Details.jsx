@@ -6,8 +6,6 @@ import { List } from "../components/commons/List";
 import { useAxios } from "../utils/useAxios.jsx";
 import { useImgUrl } from "../utils/useImgUrl.jsx";
 
-import NoImg from "../assets/no-img.svg?react";
-
 export const Details = () => {
   const { type, id } = useParams();
 
@@ -18,7 +16,7 @@ export const Details = () => {
     url: noParams ? "" : `/api/${type}/${id}`,
   });
 
-  const imgUrl = useImgUrl(data ? data.img : "", "poster", 4);
+  const imgUrl = useImgUrl(data ? data.img : "", "poster", "large");
 
   if (noParams) return <p>Tipo o ID erroneos</p>;
 
@@ -37,11 +35,7 @@ export const Details = () => {
   return (
     <>
       <div className="poster">
-        {imgUrl === "No image" ? (
-          <NoImg className="m-img" />
-        ) : (
-          <img src={imgUrl} alt={data.name} className="m-img" />
-        )}
+        <img src={imgUrl} alt={data.name} className="m-img" />
         <h2></h2>
       </div>
       <div className="details">
