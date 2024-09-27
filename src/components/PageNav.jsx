@@ -1,29 +1,32 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { useQuery } from "../utils/useQuery";
+import { useSelector } from "react-redux";
 
-export const PageNav = ({ url, actualPage, noMore }) => {
-  const navigate = useNavigate();
+export const PageNav = ({ noMore }) => {
+  const { setQueryPage } = useQuery();
+
+  const page = useSelector((state) => state.search.page);
 
   return (
     <footer id="page-nav">
       <button
-        className={`button ${actualPage === 1 ? "disabled" : ""}`}
+        className={`button ${page === 1 ? "disabled" : ""}`}
         type="button"
         name="Previous"
-        disabled={actualPage === 1}
-        onClick={() => navigate(`${url}/on/${actualPage - 1}`)}
+        disabled={page === 1}
+        onClick={() => setQueryPage(page - 1)}
       >
         Anterior
       </button>
 
-      <span id="page-num">{actualPage}</span>
+      <span id="page-num">{page}</span>
 
       <button
         className={`button ${noMore ? "disabled" : ""}`}
         type="button"
         name="Next"
         disabled={noMore}
-        onClick={() => navigate(`${url}/on/${actualPage + 1}`)}
+        onClick={() => setQueryPage(page + 1)}
       >
         Siguiente
       </button>

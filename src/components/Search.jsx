@@ -1,42 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router";
+import { useQuery } from "../utils/useQuery";
+import { useDispatch, useSelector } from "react-redux";
+import { setEndSpace } from "../store/searchSlice";
 
 export const Search = () => {
-  const [words, setWords] = useState("");
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
+  const { pathname } = useLocation();
 
-  useEffect(() => {
-    const path = location.pathname;
+  const { setQueryWords } = useQuery();
 
-    if (path.indexOf("search/") === -1) {
-      setWords("");
-      return;
-    }
-
-    if (!words && path.split("/").length === 6 && path.split("/")[3]) {
-      setWords(path.split("/")[3].replaceAll("%20", " "));
-      return;
-    }
-    if (path.split("/").length === 6 && !path.split("/")[3]) {
-      setWords("");
-      navigate(`/search`);
-      return;
-    }
-  }, [location]);
+  const { type, words, endSpace } = useSelector((state) => state.search);
 
   const wordsHandler = (e) => {
     e.preventDefault();
+    let value = e.target.value;
 
-    if (!e.target.value) {
-      setWords("");
+    if (!value || value === " ") {
       navigate(`/search`);
       return;
     }
 
-    setWords(e.target.value);
-    navigate(`/search/any/${e.target.value.replaceAll(/ /g, "%20")}/on/1`);
+    dispatch(setEndSpace(value.endsWith(" ")));
+
+    value = value.endsWith(" ") ? value.trim() : value;
+
+    if (pathname.indexOf("search") !== -1) setQueryWords(value);
+    else navigate(`/search?${type}=${value}&on=1`);
   };
 
   return (
@@ -44,7 +35,7 @@ export const Search = () => {
       <input
         id="search"
         onChange={wordsHandler}
-        value={words}
+        value={endSpace ? words + " " : words}
         type="text"
         name="words"
         placeholder="Search..."

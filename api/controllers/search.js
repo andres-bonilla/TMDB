@@ -13,8 +13,9 @@ exports.anyByWords = (req, res) => {
 exports.movieOrTvByWords = (req, res) => {
   search
     .anyByWords(req.query["by_words"], req.query["on_page"])
-    .then(({ err, data }) =>
-      err ? resError(res, data) : res.send(movieTvFilter(data))
+    .then(
+      ({ err, data }) =>
+        err ? resError(res, data) : res.send(data) /*movieTvFilter*/
     );
 };
 

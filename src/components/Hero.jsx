@@ -5,7 +5,7 @@ import { List } from "./commons/List";
 import { useImgUrl } from "../utils/useImgUrl";
 
 export const Hero = ({ list }) => {
-  const imgIndex = 7;
+  const imgIndex = 3;
   const backImgUrl = useImgUrl(list[imgIndex].backdrop, "backdrop", "large");
   const imgUrl = useImgUrl(list[imgIndex].img, "poster", "large");
 

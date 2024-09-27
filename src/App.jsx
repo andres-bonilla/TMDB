@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { setImgData } from "./store/img";
@@ -13,14 +13,28 @@ import { Details } from "./pages/Details.jsx";
 
 import { useAxios } from "./utils/useAxios.jsx";
 import { ResetScroll } from "./utils/ResetScroll.jsx";
+import { setSearch } from "./store/searchSlice.js";
 
 export const App = () => {
   const dispatch = useDispatch();
+  const [query, setQuery] = useSearchParams();
 
   const { loading, data } = useAxios({
     method: "get",
     url: "/api/data/img_data",
   });
+
+  useEffect(() => {
+    const queryType = Object.keys(Object.fromEntries(query.entries()))[0];
+
+    dispatch(
+      setSearch({
+        words: query.get(queryType) || "",
+        type: queryType || "any",
+        page: query.get("on") || 1,
+      })
+    );
+  }, [query]);
 
   useEffect(() => {
     if (!loading) dispatch(setImgData(data));

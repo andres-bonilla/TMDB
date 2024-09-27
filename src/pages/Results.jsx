@@ -1,30 +1,27 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 
+import { Tabs } from "../components/Tabs.jsx";
 import { Grid } from "../components/Grid.jsx";
 import { PageNav } from "../components/PageNav.jsx";
 
 import { useAxios } from "../utils/useAxios.jsx";
+import { useQuery } from "../utils/useQuery.jsx";
+import { useSelector } from "react-redux";
 
 export const Results = () => {
-  let { type, words, page } = useParams();
-  page = page === undefined ? 1 : page;
-
-  const noParams = type === undefined || words === undefined;
-
-  const apiSearchUrl = noParams
-    ? ""
-    : `/api/search/${type}?by_words=${words}&on_page=${page}`;
+  const { type, words, page } = useSelector((state) => state.search);
 
   const { loading, data } = useAxios(
     {
       method: "get",
-      url: apiSearchUrl,
+      url: !words
+        ? ""
+        : `/api/search/${type}?by_words=${words}&on_page=${page}`,
     },
     true
   );
 
-  if (noParams) return <p>Haz una busqueda!</p>;
+  if (!words) return <p>Haz una busqueda!</p>;
 
   if (loading) return <p>Cargando...</p>;
 
@@ -33,12 +30,9 @@ export const Results = () => {
 
   return (
     <>
+      <Tabs />
       <Grid data={data} />
-      <PageNav
-        url={`/search/${type}/${words}`}
-        actualPage={Number(page)}
-        noMore={data.length < 36}
-      />
+      <PageNav noMore={data.length < 36} />
     </>
   );
 };
