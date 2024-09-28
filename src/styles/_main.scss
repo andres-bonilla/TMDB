@@ -1,14 +1,15 @@
-#content2 {
+#content {
   display: flex;
   flex-direction: column;
   width: 80%;
   min-height: 120vh;
   margin: 0 auto;
-  padding-top: 128px;
+  margin-bottom: 128px;
+  margin-top: 88px;
 }
 
 @media (max-width: 768px) {
-  #content2 {
+  #content {
     width: max(328px, 90%);
   }
 }

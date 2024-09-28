@@ -1,11 +1,15 @@
 import React from "react";
-import { useQuery } from "../utils/useQuery";
 import { useSelector } from "react-redux";
 
-export const Tabs = () => {
-  const { setQueryType } = useQuery();
+import { useQuery } from "../utils/useQuery";
 
+export const Tabs = () => {
   const type = useSelector((state) => state.search.type);
+  const { setQueryType } = useQuery();
+  const tabTypes = {
+    eng: ["any", "movie", "tv", "person"],
+    esp: ["Todo", "Pelicula", "TV", "Persona"],
+  };
 
   const checkHandler = ({ checked }, name) => {
     let value = checked ? name : "any";
@@ -20,8 +24,8 @@ export const Tabs = () => {
   };
 
   return (
-    <>
-      {["any", "movie", "tv", "person"].map((tab, i) => {
+    <header id="tabs">
+      {tabTypes.eng.map((tab, i) => {
         return (
           <label key={i} className="tab">
             <input
@@ -30,10 +34,10 @@ export const Tabs = () => {
               type="checkbox"
               name={tab}
             />
-            <span>{tab}</span>
+            <span>{tabTypes.esp[i]}</span>
           </label>
         );
       })}
-    </>
+    </header>
   );
 };

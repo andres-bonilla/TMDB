@@ -9,9 +9,11 @@ export const useQuery = () => {
   const setQueryType = (newType) => {
     setQuery((prev) => {
       const prevType = Object.keys(Object.fromEntries(prev.entries()))[0];
+
       const newQuery = {};
       newQuery[newType] = prev.get(prevType);
       newQuery["on"] = 1;
+
       return newQuery;
     });
   };
@@ -20,10 +22,12 @@ export const useQuery = () => {
     setQuery((prev) => {
       const prevType =
         Object.keys(Object.fromEntries(prev.entries()))[0] || "any";
+
       if (prev.get(prevType) === value) return prev;
 
       prev.set(prevType, value);
       prev.set("on", 1);
+
       return prev;
     });
   };
@@ -31,6 +35,7 @@ export const useQuery = () => {
   const setQueryPage = (value) => {
     setQuery((prev) => {
       prev.set("on", value);
+
       return prev;
     });
   };
@@ -43,6 +48,7 @@ export const useQuery = () => {
   }, [query]);
 
   return {
+    query,
     setQueryType,
     setQueryWords,
     setQueryPage,

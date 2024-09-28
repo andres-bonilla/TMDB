@@ -1,11 +1,11 @@
 import React from "react";
-import { useQuery } from "../utils/useQuery";
 import { useSelector } from "react-redux";
 
-export const PageNav = ({ noMore }) => {
-  const { setQueryPage } = useQuery();
+import { useQuery } from "../utils/useQuery";
 
+export const PageNav = ({ noMore }) => {
   const page = useSelector((state) => state.search.page);
+  const { setQueryPage } = useQuery();
 
   return (
     <footer id="page-nav">

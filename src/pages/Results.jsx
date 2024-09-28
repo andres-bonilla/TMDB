@@ -1,12 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import { Tabs } from "../components/Tabs.jsx";
 import { Grid } from "../components/Grid.jsx";
 import { PageNav } from "../components/PageNav.jsx";
 
 import { useAxios } from "../utils/useAxios.jsx";
-import { useQuery } from "../utils/useQuery.jsx";
-import { useSelector } from "react-redux";
 
 export const Results = () => {
   const { type, words, page } = useSelector((state) => state.search);

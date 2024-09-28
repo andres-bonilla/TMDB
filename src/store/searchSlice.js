@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   words: "",
-  endSpace: false,
   type: "any",
   page: 1,
 };
@@ -20,9 +19,6 @@ export const searchSlice = createSlice({
       state.words = action.payload.replaceAll("+", " ");
       state.page = 1;
     },
-    setEndSpace(state, action) {
-      state.endSpace = action.payload;
-    },
     setType(state, action) {
       state.type = action.payload;
       state.page = 1;
@@ -38,13 +34,7 @@ export const searchSlice = createSlice({
   },
 });
 
-export const {
-  setSearch,
-  setWords,
-  setEndSpace,
-  setType,
-  setPage,
-  resetSearch,
-} = searchSlice.actions;
+export const { setSearch, setWords, setType, setPage, resetSearch } =
+  searchSlice.actions;
 
 export default searchSlice.reducer;
