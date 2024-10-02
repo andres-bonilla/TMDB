@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useQuery } from "../utils/useQuery";
 
 export const PageNav = ({ noMore }) => {
-  const page = useSelector((state) => state.search.page);
+  const page = useSelector((state) => Math.abs(state.search.page));
   const { setQueryPage } = useQuery();
 
   return (

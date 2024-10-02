@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
+import { setPage, setType, setWords } from "../store/searchSlice";
+
 import { useQuery } from "../utils/useQuery";
-import { setSearch } from "../store/searchSlice";
 
 export const Search = () => {
   const dispatch = useDispatch();
@@ -11,19 +12,21 @@ export const Search = () => {
   const location = useLocation();
 
   const [endSpace, setEndSpace] = useState(false);
-  const { type, words } = useSelector((state) => state.search);
+  const { type, words, page } = useSelector((state) => state.search);
   const { query, setQueryWords } = useQuery();
 
   useEffect(() => {
     const queryType = Object.keys(Object.fromEntries(query.entries()))[0];
+    const newWord = query.get(queryType)?.replaceAll("+", " ") || "";
+    const newType = queryType || "any";
+    const newPage = Number(query.get("on")) || 1;
 
-    dispatch(
-      setSearch({
-        words: query.get(queryType) || "",
-        type: queryType || "any",
-        page: query.get("on") || 1,
-      })
-    );
+    if (type !== newType) dispatch(setType(newType));
+
+    if (words !== newWord) dispatch(setWords(newWord));
+
+    if (Math.abs(page) !== newPage) dispatch(setPage(newPage));
+    else if (type !== newType || words !== newWord) dispatch(setPage(1));
   }, [query]);
 
   const wordsHandler = (e) => {

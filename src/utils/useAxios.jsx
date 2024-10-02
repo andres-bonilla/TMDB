@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export const useAxios = (params, withControl) => {
+export const useAxios = (config, withControl) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [err, setErr] = useState("");
 
   useEffect(() => {
-    if (params.url) {
+    if (config.url) {
       const axiosCall = (req) =>
         axios
           .request(req)
@@ -17,13 +17,13 @@ export const useAxios = (params, withControl) => {
 
       if (withControl) {
         const abortControl = new AbortController();
-        axiosCall({ ...params, signal: abortControl.signal });
+        axiosCall({ ...config, signal: abortControl.signal });
         return () => abortControl.abort();
       }
 
-      axiosCall(params);
+      axiosCall(config);
     }
-  }, [params.url]);
+  }, [config.url]);
 
   return { loading, data, err };
 };

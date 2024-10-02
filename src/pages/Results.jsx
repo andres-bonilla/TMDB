@@ -1,24 +1,47 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Tabs } from "../components/Tabs.jsx";
 import { Grid } from "../components/Grid.jsx";
 import { PageNav } from "../components/PageNav.jsx";
 
 import { useAxios } from "../utils/useAxios.jsx";
+import { useGridLength } from "../utils/useGridLength.jsx";
+import { setIndex, setLimit } from "../store/searchSlice.js";
 
 export const Results = () => {
-  const { type, words, page } = useSelector((state) => state.search);
+  const dispatch = useDispatch();
+  const length = useGridLength();
+  const { type, words, page, index, limit } = useSelector(
+    (state) => state.search
+  );
 
   const { loading, data } = useAxios(
     {
       method: "get",
       url: !words
         ? ""
-        : `/api/search/${type}?by_words=${words}&on_page=${page}`,
+        : `/api/search/${type}?by_words=${words}&on_page=${page}&limit=${length}`,
+      params: {
+        tmdb_index:
+          limit === length ? (page < 0 ? index.first : index.last) : 0,
+      },
     },
     true
   );
+
+  useEffect(() => {
+    if (!loading) {
+      dispatch(
+        setIndex(
+          data && data.length
+            ? { first: data[0].index, last: data[data.length - 1].index }
+            : { first: 0, last: 0 }
+        )
+      );
+      dispatch(setLimit(length));
+    }
+  }, [data]);
 
   if (!words) return <p>Haz una busqueda!</p>;
 
@@ -31,7 +54,7 @@ export const Results = () => {
     <>
       <Tabs />
       <Grid data={data} />
-      <PageNav noMore={data.length < 36} />
+      <PageNav noMore={data.length < length} />
     </>
   );
 };

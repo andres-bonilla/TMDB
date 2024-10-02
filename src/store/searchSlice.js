@@ -4,37 +4,51 @@ const initialState = {
   words: "",
   type: "any",
   page: 1,
+  index: { first: 0, last: 0 },
+  limit: 0,
 };
 
 export const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    setSearch(state, action) {
-      state.words = action.payload.words.replaceAll("+", " ");
-      state.type = action.payload.type;
-      state.page = action.payload.page;
-    },
     setWords(state, action) {
-      state.words = action.payload.replaceAll("+", " ");
-      state.page = 1;
+      state.words = action.payload;
+      state.index.first = 0;
+      state.index.last = 0;
+      console.log([0, 0]);
     },
     setType(state, action) {
       state.type = action.payload;
-      state.page = 1;
+      state.index.first = 0;
+      state.index.last = 0;
+      console.log([0, 0]);
     },
     setPage(state, action) {
-      state.page = Number(action.payload);
+      if (
+        Math.abs(state.page) + 1 !== action.payload &&
+        Math.abs(state.page) - 1 !== action.payload
+      ) {
+        state.index.first = 0;
+        state.index.last = 0;
+        console.log([0, 0]);
+      }
+
+      const fitter = Math.abs(state.page) - 1 === action.payload ? -1 : 1;
+
+      state.page = fitter * action.payload;
     },
-    resetSearch(state) {
-      state.words = "";
-      state.type = "any";
-      state.page = 1;
+    setIndex(state, action) {
+      console.log(action.payload);
+      state.index = action.payload;
+    },
+    setLimit(state, action) {
+      state.limit = action.payload;
     },
   },
 });
 
-export const { setSearch, setWords, setType, setPage, resetSearch } =
+export const { setWords, setType, setPage, setIndex, setLimit } =
   searchSlice.actions;
 
 export default searchSlice.reducer;

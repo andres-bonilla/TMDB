@@ -9,7 +9,7 @@ exports.urlIdMaker = (mediaType, id) => {
   if (mediaType === "person") {
     return `${urlTmdb}/${mediaType}/${id}?append_to_response=combined_credits&${apiKey}&${apiLang}`;
   } else {
-    return `${urlTmdb}/${mediaType}/${id}?append_to_response=similar&${apiKey}&${apiLang}`;
+    return `${urlTmdb}/${mediaType}/${id}?append_to_response=similar,videos&${apiKey}&${apiLang}`;
   }
 };
 

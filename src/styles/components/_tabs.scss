@@ -14,8 +14,8 @@
   align-items: center;
   border-radius: 6px;
 
-  background-color: hsl(0, 0%, 15%);
   color: hsl(0, 0%, 96%);
+  background-color: hsl(0, 0%, 15%);
   border: 2px solid hsl(0, 0%, 15%);
 
   input {
@@ -41,5 +41,13 @@ $colors: (
 @each $i, $color in $colors {
   .tab:nth-child(#{ $i }):has(input:checked) {
     background: $color;
+  }
+}
+
+@media (max-width: 768px) {
+  #tabs {
+    width: 230px;
+    flex-wrap: wrap;
+    align-self: center;
   }
 }

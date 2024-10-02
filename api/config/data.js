@@ -3,7 +3,7 @@ const { urlImgDataMaker, urlTopListMaker } = require("./utils/urlMaker");
 const { filterList } = require("./utils/filters");
 
 const filterImgData = ({ images }) => {
-  console.log(images, "---------IMG");
+  //console.log(images, "---------IMG");
   return {
     url: images["base_url"],
     secureUrl: images["secure_base_url"],

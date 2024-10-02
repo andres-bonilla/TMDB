@@ -33,7 +33,7 @@ const filterInfo = (data) => {
     .slice(0, 10);
   info.related = filterList(info.related, "tv");
   /////////////////////////////////////////////////////////////////
-
+  console.log(data.videos.results);
   return info;
 };
 
