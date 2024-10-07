@@ -2,8 +2,6 @@ exports.resError = (res, { status, message }) =>
   res.status(status || 500).send({ message });
 
 exports.initRules = (amount, page, tmdbIndex, sameIndex = false) => {
-  console.log("primitive", page, amount, tmdbIndex);
-
   let prevIndex;
 
   if (sameIndex)
@@ -18,8 +16,6 @@ exports.initRules = (amount, page, tmdbIndex, sameIndex = false) => {
   index.init = (Math.abs(stPage) - 1) * 20 + 1;
   index.tmdb = prevIndex;
   index.local = page < 0 ? Math.abs(page) * amount + 1 : (page - 1) * amount;
-
-  console.log(fitter < 0 ? "-" : "", stPage, "$", index, "$", amount, "\n--");
 
   return { stPage, rules: { index, fitter, amount } };
 };
