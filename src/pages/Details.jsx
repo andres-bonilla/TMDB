@@ -36,9 +36,8 @@ export const Details = () => {
     <>
       <div className="poster">
         <img src={imgUrl} alt={data.name} className="m-img" />
-        <h2></h2>
       </div>
-      <div className="details">
+      <div className="details with-left-space">
         <h1 className="details-title">{data.name}</h1>
         {mapDescription(data.description)}
       </div>
@@ -47,8 +46,8 @@ export const Details = () => {
         <List
           data={data.related}
           titleText="Relacionados"
-          boxClass={"related-container"}
-          titleClass={"related-title"}
+          boxClass={"related-container with-left-space"}
+          titleClass={"related-title with-left-space"}
         />
       )}
     </>

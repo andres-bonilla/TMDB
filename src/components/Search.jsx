@@ -6,7 +6,7 @@ import { setPage, setType, setWords } from "../store/searchSlice";
 
 import { useQuery } from "../utils/useQuery";
 
-export const Search = () => {
+export const Search = ({ isDetails }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,7 +49,12 @@ export const Search = () => {
   };
 
   return (
-    <form id="search-form" target="search" onSubmit={wordsHandler}>
+    <form
+      id="search-form"
+      target="search"
+      onSubmit={wordsHandler}
+      className={isDetails ? "with-left-space" : ""}
+    >
       <input
         id="search"
         onChange={wordsHandler}
