@@ -32,8 +32,8 @@ const filterInfo = (data) => {
     .sort((a, b) => b.popularity - a.popularity)
     .slice(0, 10);
   info.related = filterList(info.related, "tv");
-  /////////////////////////////////////////////////////////////////
-  console.log(data.videos.results);
+  ///////////////////////////console.log(data.videos.results);
+
   return info;
 };
 
