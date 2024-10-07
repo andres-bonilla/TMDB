@@ -3,6 +3,8 @@ const express = require("express"),
 
 const dataRouter = express.Router();
 
-dataRouter.get("/img_data", data.urlImgData);
+dataRouter.get("/img_data", data.imgData);
+
+dataRouter.get("/top_lists", data.topLists);
 
 module.exports = dataRouter;

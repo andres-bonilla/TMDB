@@ -1,0 +1,53 @@
+#tabs {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 16px;
+  margin: 0;
+  margin-bottom: 48px;
+}
+
+.tab {
+  display: flex;
+  width: fit-content;
+  min-width: 100px;
+  align-items: center;
+  border-radius: 6px;
+
+  color: hsl(0, 0%, 96%);
+  background-color: hsl(0, 0%, 15%);
+  border: 2px solid hsl(0, 0%, 15%);
+
+  input {
+    display: none;
+  }
+
+  span {
+    width: 100%;
+    padding: 4px 8px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}
+
+$colors: (
+  1: #bd519b,
+  2: #de443f,
+  3: #47c25c,
+  4: #55b4dd,
+);
+
+@each $i, $color in $colors {
+  .tab:nth-child(#{ $i }):has(input:checked) {
+    background: $color;
+  }
+}
+
+@media (max-width: 768px) {
+  #tabs {
+    width: 230px;
+    flex-wrap: wrap;
+    align-self: center;
+  }
+}

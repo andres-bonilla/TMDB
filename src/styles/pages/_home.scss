@@ -1,0 +1,12 @@
+.home-first {
+  margin-top: 450px;
+}
+
+.list-container {
+  margin-bottom: 72px;
+  overflow-x: hidden;
+
+  .list {
+    width: clamp(1704px, 230%, 2544px);
+  }
+}

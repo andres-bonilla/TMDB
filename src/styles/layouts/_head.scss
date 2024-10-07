@@ -1,0 +1,27 @@
+@use "../variables" as *;
+
+#head {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 10vw;
+  width: 100%;
+  height: 72px;
+  padding: 0px 10vw;
+
+  background: $back_color;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 10px;
+}
+
+#mb-logo {
+  height: 40px;
+  margin-top: 4px;
+  margin-left: 60px;
+}
+@media (max-width: 768px) {
+  #mb-logo {
+    margin-left: max(16px, 5vw);
+  }
+}

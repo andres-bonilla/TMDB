@@ -1,0 +1,18 @@
+@use "./variables" as *;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 360px;
+  margin: 0;
+  scrollbar-gutter: stable both-edges;
+
+  font-family: $font_fallback;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+
+  background-color: $back_color;
+}

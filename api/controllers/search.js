@@ -1,37 +1,93 @@
-const search = require("../config/search"),
-  { movieTvFilter } = require("./utils/utils");
-
-const resError = (res, { status, message }) =>
-  res.status(status || 500).send({ message });
+const search = require("../services/search");
+const { initRules, resError } = require("./helpers/utils");
 
 exports.anyByWords = (req, res) => {
+  const tmdbIndex = Number(req.query["tmdb_index"]);
+  const amount = Number(req.query["amount"]);
+  const page = Number(req.query["on_page"]);
+  const words = req.query["by_words"];
+
+  let { stPage, rules } = initRules(amount, page, tmdbIndex);
+
+  if (rules.index.tmdb) rules.index.local = 0;
+  rules.media = "any";
+  rules.criteria = {
+    noPerson: false,
+    genre: { include: [], exclude: [10767, 10763, 10764] },
+  };
   search
-    .anyByWords(req.query["by_words"], req.query["on_page"])
+    .anyByWords(words, stPage, rules)
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };
 
 exports.movieOrTvByWords = (req, res) => {
+  const tmdbIndex = Number(req.query["tmdb_index"]);
+  const amount = Number(req.query["amount"]);
+  const page = Number(req.query["on_page"]);
+  const words = req.query["by_words"];
+
+  let { stPage, rules } = initRules(amount, page, tmdbIndex);
+
+  if (rules.index.tmdb) rules.index.local = 0;
+  rules.media = "any";
+  rules.criteria = {
+    noPerson: true,
+    genre: { include: [], exclude: [10767, 10763, 10764] },
+  };
   search
-    .anyByWords(req.query["by_words"], req.query["on_page"])
-    .then(({ err, data }) =>
-      err ? resError(res, data) : res.send(movieTvFilter(data))
-    );
+    .movieOrTvByWords(words, stPage, rules)
+    .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };
 
 exports.movieByWords = (req, res) => {
+  const tmdbIndex = Number(req.query["tmdb_index"]);
+  const amount = Number(req.query["amount"]);
+  const page = Number(req.query["on_page"]);
+  const words = req.query["by_words"];
+
+  let { stPage, rules } = initRules(amount, page, tmdbIndex, true);
+
+  if (rules.index.tmdb) rules.index.local = 0;
+  rules.media = "movie";
+  rules.criteria = null;
+
   search
-    .movieByWords(req.query["by_words"], req.query["on_page"])
+    .movieByWords(words, stPage, rules)
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };
 
 exports.tvByWords = (req, res) => {
+  const tmdbIndex = Number(req.query["tmdb_index"]);
+  const amount = Number(req.query["amount"]);
+  const page = Number(req.query["on_page"]);
+  const words = req.query["by_words"];
+
+  let { stPage, rules } = initRules(amount, page, tmdbIndex);
+
+  if (rules.index.tmdb) rules.index.local = 0;
+  rules.media = "tv";
+  rules.criteria = {
+    noPerson: false,
+    genre: { include: [], exclude: [10767, 10763, 10764] },
+  };
   search
-    .tvByWords(req.query["by_words"], req.query["on_page"])
+    .tvByWords(words, stPage, rules)
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };
 
 exports.personByWords = (req, res) => {
+  const tmdbIndex = Number(req.query["tmdb_index"]);
+  const amount = Number(req.query["amount"]);
+  const page = Number(req.query["on_page"]);
+  const words = req.query["by_words"];
+
+  let { stPage, rules } = initRules(amount, page, tmdbIndex, true);
+
+  if (rules.index.tmdb) rules.index.local = 0;
+  rules.media = "person";
+  rules.criteria = null;
+
   search
-    .personByWords(req.query["by_words"], req.query["on_page"])
+    .personByWords(words, stPage, rules)
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };

@@ -1,0 +1,55 @@
+@use "../variables" as *;
+
+.poster {
+  width: clamp(200px, 20%, 360px);
+  border-radius: 16px 16px 0px 0px;
+  position: fixed;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 10px;
+}
+
+.details {
+  padding-bottom: 12px;
+  margin-left: min(420px, 30%);
+  color: $text_color;
+  border-bottom: 1px solid black;
+}
+
+.details-title {
+  text-align: center;
+  margin-top: 0;
+}
+
+.related-title {
+  text-align: center;
+  margin-top: 48px;
+  margin-left: min(420px, 30%);
+}
+
+.related-container {
+  overflow-x: auto;
+  margin-bottom: 72px;
+  margin-left: min(420px, 30%);
+
+  .list {
+    width: clamp(1544px, 240%, 2444px);
+  }
+}
+
+@media (max-width: 950px) {
+  .poster {
+    position: static;
+    width: 230px;
+    margin: 0px auto;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 10px;
+  }
+
+  .details,
+  .related-title,
+  .related-container {
+    margin-left: 0;
+  }
+
+  .related-container .list {
+    width: 1704px;
+  }
+}

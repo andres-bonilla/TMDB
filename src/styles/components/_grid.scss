@@ -1,0 +1,25 @@
+#grid {
+  display: grid;
+  gap: 16px;
+  justify-content: center;
+}
+
+$map: (
+  0: 2,
+  580: 3,
+  950: 4,
+  1250: 5,
+  1650: 6,
+  2040: 7,
+);
+
+@each $media, $val in $map {
+  @media (min-width: #{ $media }px) {
+    #grid {
+      grid-template-columns: repeat(
+        auto-fill,
+        calc((100% - 16px * ($val - 1)) / $val)
+      );
+    }
+  }
+}

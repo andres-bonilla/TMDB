@@ -1,9 +1,13 @@
 // STORE CREATION
 import { configureStore } from "@reduxjs/toolkit";
-import logger from "redux-logger";
+import { createLogger } from "redux-logger";
 import imgReducer from "./img";
 import searchReducer from "./searchSlice";
 import userReducer from "./userSlice";
+
+const logger = createLogger({
+  collapsed: true,
+});
 
 const middleware = (getDefaultMiddleware) =>
   getDefaultMiddleware().concat(logger);
