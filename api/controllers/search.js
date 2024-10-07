@@ -1,122 +1,93 @@
-const search = require("../config/search");
-
-const resError = (res, { status, message }) =>
-  res.status(status || 500).send({ message });
-
-const initParams = (values) => {
-  const words = values["by_words"];
-  const page = Number(values["on_page"]);
-  const limit = Number(values["limit"]);
-  const tmdbIndex = Number(values["tmdb_index"]);
-
-  console.log("\n", "primitive", words, page, limit, tmdbIndex);
-
-  const fitter = page < 0 ? -1 : 1;
-  const firstPage = fitter * Math.ceil((tmdbIndex + fitter) / 20) || 1;
-  const localIndex = page < 0 ? page * -1 * limit + 1 : (page - 1) * limit;
-  const index = {
-    tmdb: tmdbIndex,
-    local: tmdbIndex ? 0 : localIndex,
-  };
-
-  console.log(
-    "params",
-    words,
-    "$",
-    firstPage,
-    "$",
-    index.tmdb,
-    "$",
-    index.local,
-    "$",
-    limit,
-    "\n"
-  );
-  /*
-
-if (!last && !init) {
-  if (page > 0) {
-    firstPage = Math.ceil(((page - 1) * limit + 1) / 20);
-  } else {
-    firstPage = Math.ceil((-page * limit) / 20);
-  }
-} else if (last) {
-  if (page > 0) {
-    firstPage = Math.ceil((last + 1) / 20);
-  }
-} else if (init) {
-  if (page < 0) {
-    firstPage = Math.ceil((init - 1) / 20);
-  }
-}
-  
-  firstPage = (page - 1) * limit
-  if (init === 0 && last !== 0) {
-    firstPage = Math.ceil(last / 20)
-  }
-
-  if (init !== 0 && last === 0) {
-
-  }
-
-  if ((last === 0) & (page > 1)) last = (page - 1) * limit;
-
-  let firstPage = Math.ceil(((page - 1) * limit) / 20);
-  firstPage = firstPage === 0 ? 1 : firstPage;
-
-  if (last !== 0) firstPage = Math.floor(last / 20);
-  console.log(words, "$$", firstPage, "$$", init, "$$", last, "$$", limit);*/
-  return { words, firstPage, index, limit };
-};
+const search = require("../services/search");
+const { initRules, resError } = require("./helpers/utils");
 
 exports.anyByWords = (req, res) => {
-  const { words, firstPage, index, limit } = initParams(req.query);
+  const tmdbIndex = Number(req.query["tmdb_index"]);
+  const amount = Number(req.query["amount"]);
+  const page = Number(req.query["on_page"]);
+  const words = req.query["by_words"];
 
+  let { stPage, rules } = initRules(amount, page, tmdbIndex);
+
+  if (rules.index.tmdb) rules.index.local = 0;
+  rules.media = "any";
+  rules.criteria = {
+    noPerson: false,
+    genre: { include: [], exclude: [10767, 10763, 10764] },
+  };
   search
-    .anyByWords(words, firstPage, index, limit)
+    .anyByWords(words, stPage, rules)
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };
 
 exports.movieOrTvByWords = (req, res) => {
-  const { words, firstPage, index, limit } = initParams(req.query);
+  const tmdbIndex = Number(req.query["tmdb_index"]);
+  const amount = Number(req.query["amount"]);
+  const page = Number(req.query["on_page"]);
+  const words = req.query["by_words"];
 
+  let { stPage, rules } = initRules(amount, page, tmdbIndex);
+
+  if (rules.index.tmdb) rules.index.local = 0;
+  rules.media = "any";
+  rules.criteria = {
+    noPerson: true,
+    genre: { include: [], exclude: [10767, 10763, 10764] },
+  };
   search
-    .movieOrTvByWords(words, firstPage, index, limit)
+    .movieOrTvByWords(words, stPage, rules)
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };
 
 exports.movieByWords = (req, res) => {
-  const { words, firstPage, index, limit } = initParams(req.query);
-  const fitter = firstPage > 0 ? 1 : -1;
-  onPage = !index.tmdb
-    ? fitter * Math.ceil((index.local + fitter) / 20)
-    : firstPage;
+  const tmdbIndex = Number(req.query["tmdb_index"]);
+  const amount = Number(req.query["amount"]);
+  const page = Number(req.query["on_page"]);
+  const words = req.query["by_words"];
 
-  if (!index.tmdb) index.tmdb = index.local;
+  let { stPage, rules } = initRules(amount, page, tmdbIndex, true);
+
+  if (rules.index.tmdb) rules.index.local = 0;
+  rules.media = "movie";
+  rules.criteria = null;
 
   search
-    .movieByWords(words, onPage, index, limit)
+    .movieByWords(words, stPage, rules)
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };
 
 exports.tvByWords = (req, res) => {
-  const { words, firstPage, index, limit } = initParams(req.query);
+  const tmdbIndex = Number(req.query["tmdb_index"]);
+  const amount = Number(req.query["amount"]);
+  const page = Number(req.query["on_page"]);
+  const words = req.query["by_words"];
 
+  let { stPage, rules } = initRules(amount, page, tmdbIndex);
+
+  if (rules.index.tmdb) rules.index.local = 0;
+  rules.media = "tv";
+  rules.criteria = {
+    noPerson: false,
+    genre: { include: [], exclude: [10767, 10763, 10764] },
+  };
   search
-    .tvByWords(words, firstPage, index, limit)
+    .tvByWords(words, stPage, rules)
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };
 
 exports.personByWords = (req, res) => {
-  const { words, firstPage, index, limit } = initParams(req.query);
-  const fitter = firstPage > 0 ? 1 : -1;
-  onPage = !index.tmdb
-    ? fitter * Math.ceil((index.local + fitter) / 20)
-    : firstPage;
+  const tmdbIndex = Number(req.query["tmdb_index"]);
+  const amount = Number(req.query["amount"]);
+  const page = Number(req.query["on_page"]);
+  const words = req.query["by_words"];
 
-  if (!index.tmdb) index.tmdb = index.local;
+  let { stPage, rules } = initRules(amount, page, tmdbIndex, true);
+
+  if (rules.index.tmdb) rules.index.local = 0;
+  rules.media = "person";
+  rules.criteria = null;
 
   search
-    .personByWords(words, onPage, index, limit)
+    .personByWords(words, stPage, rules)
     .then(({ err, data }) => (err ? resError(res, data) : res.send(data)));
 };

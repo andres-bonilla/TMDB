@@ -17,16 +17,20 @@ export const Search = () => {
 
   useEffect(() => {
     const queryType = Object.keys(Object.fromEntries(query.entries()))[0];
+
+    if (!query.get(queryType) && location.pathname.indexOf("search") !== -1)
+      navigate(`/search`);
+
     const newWord = query.get(queryType)?.replaceAll("+", " ") || "";
     const newType = queryType || "any";
     const newPage = Number(query.get("on")) || 1;
 
+    if (Math.abs(page) !== newPage) dispatch(setPage(newPage));
+    else if (type !== newType || words !== newWord) dispatch(setPage(1));
+
     if (type !== newType) dispatch(setType(newType));
 
     if (words !== newWord) dispatch(setWords(newWord));
-
-    if (Math.abs(page) !== newPage) dispatch(setPage(newPage));
-    else if (type !== newType || words !== newWord) dispatch(setPage(1));
   }, [query]);
 
   const wordsHandler = (e) => {

@@ -1,4 +1,4 @@
-const data = require("../config/data");
+const data = require("../services/data");
 
 const resError = (res, { status, message }) =>
   res.status(status || 500).send({ message });

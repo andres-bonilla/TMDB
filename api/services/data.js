@@ -1,6 +1,6 @@
 const axios = require("axios");
-const { urlImgDataMaker, urlTopListMaker } = require("./utils/urlMaker");
-const { filterList } = require("./utils/filters");
+const { urlImgDataMaker, urlTopListMaker } = require("./helpers/urlMakers");
+const { filterList } = require("./helpers/filters");
 
 const filterImgData = ({ images }) => {
   //console.log(images, "---------IMG");

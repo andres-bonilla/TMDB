@@ -14,14 +14,12 @@ export const searchSlice = createSlice({
   reducers: {
     setWords(state, action) {
       state.words = action.payload;
-      state.index.first = 0;
-      state.index.last = 0;
+      state.index = { first: 0, last: 0 };
       console.log([0, 0]);
     },
     setType(state, action) {
       state.type = action.payload;
-      state.index.first = 0;
-      state.index.last = 0;
+      state.index = { first: 0, last: 0 };
       console.log([0, 0]);
     },
     setPage(state, action) {
@@ -29,8 +27,7 @@ export const searchSlice = createSlice({
         Math.abs(state.page) + 1 !== action.payload &&
         Math.abs(state.page) - 1 !== action.payload
       ) {
-        state.index.first = 0;
-        state.index.last = 0;
+        state.index = { first: 0, last: 0 };
         console.log([0, 0]);
       }
 

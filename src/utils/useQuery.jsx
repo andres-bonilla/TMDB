@@ -1,16 +1,14 @@
-import React, { useEffect } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import React from "react";
+import { useSearchParams } from "react-router-dom";
 
 export const useQuery = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const [query, setQuery] = useSearchParams();
 
   const setQueryType = (newType) => {
     setQuery((prev) => {
       const prevType = Object.keys(Object.fromEntries(prev.entries()))[0];
-
       const newQuery = {};
+
       newQuery[newType] = prev.get(prevType);
       newQuery["on"] = 1;
 
@@ -39,13 +37,6 @@ export const useQuery = () => {
       return prev;
     });
   };
-
-  useEffect(() => {
-    const queryType = Object.keys(Object.fromEntries(query.entries()))[0];
-
-    if (!query.get(queryType) && location.pathname.indexOf("search") !== -1)
-      navigate(`/search`);
-  }, [query]);
 
   return {
     query,

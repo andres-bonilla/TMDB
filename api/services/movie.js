@@ -1,6 +1,6 @@
 const axios = require("axios"),
-  { urlIdMaker } = require("./utils/urlMaker");
-const { filterList } = require("./utils/filters");
+  { urlIdMaker } = require("./helpers/urlMakers");
+const { filterList } = require("./helpers/filters");
 
 const filterInfo = (data) => {
   let info = {};

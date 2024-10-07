@@ -1,4 +1,4 @@
-const user = require("../config/user");
+const user = require("../services/user");
 
 exports.enroll = (req, res) => {
   user.enroll(req.body).then((data) => res.status(201).send(data));

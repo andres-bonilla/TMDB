@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { setIndex, setLimit } from "../store/searchSlice.js";
+
 import { Tabs } from "../components/Tabs.jsx";
 import { Grid } from "../components/Grid.jsx";
 import { PageNav } from "../components/PageNav.jsx";
 
-import { useAxios } from "../utils/useAxios.jsx";
 import { useGridLength } from "../utils/useGridLength.jsx";
-import { setIndex, setLimit } from "../store/searchSlice.js";
+import { useAxios } from "../utils/useAxios.jsx";
 
 export const Results = () => {
   const dispatch = useDispatch();
@@ -21,10 +22,14 @@ export const Results = () => {
       method: "get",
       url: !words
         ? ""
-        : `/api/search/${type}?by_words=${words}&on_page=${page}&limit=${length}`,
+        : `/api/search/${type}?by_words=${words}&on_page=${page}&amount=${length}`,
       params: {
         tmdb_index:
-          limit === length ? (page < 0 ? index.first : index.last) : 0,
+          limit === length && page !== 1
+            ? page < 0
+              ? index.first
+              : index.last
+            : 0,
       },
     },
     true
