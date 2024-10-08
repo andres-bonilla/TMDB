@@ -1,17 +1,23 @@
 @use "../variables" as *;
+@use "../animations" as *;
 
 .poster {
   width: clamp(200px, 20%, 360px);
   border-radius: 16px 16px 0px 0px;
   position: fixed;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 10px;
+  animation: showing 1s;
+}
+
+.with-left-space {
+  margin-left: min(420px, 30%);
 }
 
 .details {
   padding-bottom: 12px;
-  margin-left: min(420px, 30%);
   color: $text_color;
   border-bottom: 1px solid black;
+  animation: showing 1s;
 }
 
 .details-title {
@@ -22,13 +28,11 @@
 .related-title {
   text-align: center;
   margin-top: 48px;
-  margin-left: min(420px, 30%);
 }
 
 .related-container {
   overflow-x: auto;
   margin-bottom: 72px;
-  margin-left: min(420px, 30%);
 
   .list {
     width: clamp(1544px, 240%, 2444px);

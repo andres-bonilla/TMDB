@@ -1,8 +1,15 @@
 @use "../variables" as *;
 
+.float {
+  position: fixed !important;
+}
+.with-shadow {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 10px;
+}
+
 #head {
   z-index: 10;
-  position: fixed;
+  position: absolute;
   top: 0;
   display: flex;
   align-items: center;
@@ -12,7 +19,7 @@
   padding: 0px 10vw;
 
   background: $back_color;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 10px;
+  transition: box-shadow 0.5s;
 }
 
 #mb-logo {
